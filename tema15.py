@@ -119,8 +119,8 @@ def setup_keyboard():
         f.write(CONFIG_CONTENT)
 
 def apply_prompt():
-    run("sed -i '/PROMPT CUSTOM ELMY0711/d' ~/.zshrc")
-    run("sed -i '/ALIAS TEMA TERMUX/d' ~/.zshrc")
+    run("sed -i '/PROMPT CUSTOM ELMY0711/,+5d' ~/.zshrc 2>/dev/null")
+    run("sed -i '/ALIAS TEMA TERMUX/,+6d' ~/.zshrc 2>/dev/null")
     with open(ZSHRC_PATH, "a") as f:
         f.write(PROMPT_ZSH)
         f.write(ALIAS_ZSH)
