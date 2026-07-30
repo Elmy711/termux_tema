@@ -10,7 +10,7 @@ TMP_DIR = f"{HOME}/.termux/fonts_tmp"
 ZSHRC_PATH = f"{HOME}/.zshrc"
 TERMUX_PROPS = f"{HOME}/.termux/termux.properties"
 
-CONFIG_CONTENT = 'extra-keys = [["ESC","|","/","HOME","UP","END","PGUP","DEL"],["tema","CTRL","BKSP","LEFT","DOWN","RIGHT","PGDN","~"],["ls","cd ","clear","exit","pkg ","ENTER"]]'
+CONFIG_CONTENT = 'extra-keys = [["ESC","|","/","HOME","UP","END","PGUP","DEL"],["tema","CTRL","BKSP","LEFT","DOWN","RIGHT","PGDN","~"],["ls","cd ","clear","ENTER","pkg ","git pull","rm -rf","exit"]]'
 
 def run(cmd):
     subprocess.run(cmd, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
