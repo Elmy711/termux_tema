@@ -8,6 +8,9 @@ FONT_PATH = f"{HOME}/.termux/font.ttf"
 FONT_CACHE = f"{HOME}/.termux/font_cache"
 TMP_DIR = f"{HOME}/.termux/fonts_tmp"
 ZSHRC_PATH = f"{HOME}/.zshrc"
+TERMUX_PROPS = f"{HOME}/.termux/termux.properties"
+
+CONFIG_CONTENT = 'extra-keys = [["ESC","|","/","HOME","UP","END","PGUP","DEL"],["TEMA","CTRL","BKSP","LEFT","DOWN","RIGHT","PGDN","~"],["ls","cd ","clear","exit","pkg ","ENTER"]]'
 
 def run(cmd):
     subprocess.run(cmd, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
@@ -91,6 +94,12 @@ def download_font(font_name):
         run(f"cp {cache_file} {FONT_PATH}")
     run(f"rm -rf {TMP_DIR}")
 
+def setup_keyboard():
+    print("Setting up keyboard...")
+    os.makedirs(f"{HOME}/.termux", exist_ok=True)
+    with open(TERMUX_PROPS, "w") as f:
+        f.write(CONFIG_CONTENT)
+
 def apply_prompt():
     run("sed -i '/PROMPT CUSTOM ELMY0711/,+5d' ~/.zshrc")
     with open(ZSHRC_PATH, "a") as f: f.write(PROMPT_ZSH)
@@ -105,6 +114,7 @@ def apply_theme(num):
         if os.path.exists(COLORS_PATH): os.remove(COLORS_PATH)
     download_font(theme["font"])
     apply_prompt()
+    setup_keyboard()
     print("\nSelesai! Force close Termux lalu buka lagi")
 
 def main():
@@ -113,7 +123,7 @@ def main():
     os.makedirs(FONT_CACHE, exist_ok=True)
 
     while True:
-        print("\n=== TERMUX  TEMA   ===")
+        print("\n===  ELMY 0711 TEMA TERMUX  ===")
         for k, v in THEMES.items(): print(f"{k:2}. {v['name']:<20} - {v['font']}")
         pilih_input = input("\nPilih tema [1-15] atau q: ").strip()
         if pilih_input.lower() == 'q': sys.exit(0)
