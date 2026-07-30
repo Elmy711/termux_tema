@@ -10,7 +10,7 @@ TMP_DIR = f"{HOME}/.termux/fonts_tmp"
 ZSHRC_PATH = f"{HOME}/.zshrc"
 TERMUX_PROPS = f"{HOME}/.termux/termux.properties"
 
-CONFIG_CONTENT = 'extra-keys = [["ESC","|","/","HOME","UP","END","PGUP","DEL"],["tema","CTRL","BKSP","LEFT","DOWN","RIGHT","PGDN","~"],["ls","cd ","clear","ENTER","pkg ","git pull","rm -rf","exit"]]'
+CONFIG_CONTENT = 'extra-keys = [["ESC","python3 ","/","HOME","UP","END","PGUP","DEL"],["tema","CTRL","BKSP","LEFT","DOWN","RIGHT","PGDN","~"],["ls","cd ","clear","ENTER","pkg ","git pull","rm -rf","exit"]]'
 
 def run(cmd):
     subprocess.run(cmd, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
@@ -67,8 +67,8 @@ RPROMPT=''
 
 ALIAS_ZSH = '''
 # ALIAS TEMA TERMUX
-alias tema='python ~/tema-termux.py'
-alias t='python ~/tema-termux.py'
+alias tema='python ~/termux_tema/tema15.py'
+alias t='python ~/termux_tema/tema15.py'
 alias reload='source ~/.zshrc'
 alias c='clear'
 alias ll='ls -lah'
@@ -110,8 +110,8 @@ def setup_keyboard():
         f.write(CONFIG_CONTENT)
 
 def apply_prompt():
-    run("sed -i '/PROMPT CUSTOM ELMY0711/,+5d' ~/.zshrc")
-    run("sed -i '/ALIAS TEMA TERMUX/,+6d' ~/.zshrc")
+    run("sed -i '/PROMPT CUSTOM ELMY0711/,+5d' ~/.zshrc 2>/dev/null")
+    run("sed -i '/ALIAS TEMA TERMUX/,+6d' ~/.zshrc 2>/dev/null")
     with open(ZSHRC_PATH, "a") as f:
         f.write(PROMPT_ZSH)
         f.write(ALIAS_ZSH)
@@ -135,7 +135,7 @@ def main():
     os.makedirs(FONT_CACHE, exist_ok=True)
 
     while True:
-        print("\n===  ELMY0711 TEMA TERMUX  ===")
+        print("\n=== ELMY 0711 TEMA TERMUX  ===")
         for k, v in THEMES.items(): print(f"{k:2}. {v['name']:<20} - {v['font']}")
         pilih_input = input("\nPilih tema [1-15] atau q: ").strip()
         if pilih_input.lower() == 'q': sys.exit(0)
