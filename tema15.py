@@ -61,8 +61,17 @@ PROMPT_ZSH = '''
 autoload -U colors && colors
 PROMPT='%F{240}%D{%a %b %d %H:%M:%S}%f
 %F{magenta}┌─[%F{red}💖%F{cyan}ELMY0711%F{red}💜%F{magenta}]─[%F{yellow}%~%F{magenta}]%f
-%F{magenta}└──%F{green}╼%f '
+%F{magenta}└─%F{green}╼%f '
 RPROMPT=''
+'''
+
+ALIAS_ZSH = '''
+# ALIAS TEMA TERMUX
+alias tema='python ~/tema-termux.py'
+alias t='python ~/tema-termux.py'
+alias reload='source ~/.zshrc'
+alias c='clear'
+alias ll='ls -lah'
 '''
 
 def preview_theme(num):
@@ -102,7 +111,10 @@ def setup_keyboard():
 
 def apply_prompt():
     run("sed -i '/PROMPT CUSTOM ELMY0711/,+5d' ~/.zshrc")
-    with open(ZSHRC_PATH, "a") as f: f.write(PROMPT_ZSH)
+    run("sed -i '/ALIAS TEMA TERMUX/,+6d' ~/.zshrc")
+    with open(ZSHRC_PATH, "a") as f:
+        f.write(PROMPT_ZSH)
+        f.write(ALIAS_ZSH)
 
 def apply_theme(num):
     theme = THEMES[num]
@@ -123,7 +135,7 @@ def main():
     os.makedirs(FONT_CACHE, exist_ok=True)
 
     while True:
-        print("\n===  ELMY 0711 TEMA TERMUX  ===")
+        print("\n===  ELMY0711 TEMA TERMUX  ===")
         for k, v in THEMES.items(): print(f"{k:2}. {v['name']:<20} - {v['font']}")
         pilih_input = input("\nPilih tema [1-15] atau q: ").strip()
         if pilih_input.lower() == 'q': sys.exit(0)
