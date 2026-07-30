@@ -1,6 +1,6 @@
 💜💖
 
-python ~/tema-termux.py # pertama kali
+python tema15.py # pertama kali
 
 tema # buat ganti tema lagi
 
