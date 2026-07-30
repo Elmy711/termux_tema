@@ -44,7 +44,7 @@ PROMPT_ZSH = f'''
 # PROMPT CUSTOM ELMY0711
 autoload -U colors && colors
 PROMPT='%F{{240}}%D{{%a %b %d %H:%M:%S}}%f
-%F{{magenta}}┌─[%F{{red}}💖%F{{magenta}}💜%F{{cyan}}%F{{cyan}}ELMY0711%F{{magenta}}]─[%F{{yellow}}%~%F{{magenta}}]%f
+%F{{magenta}}┌─%F{{red}}💖%F{{magenta}}ELMY0711%F{{red}}💜%F{{magenta}}─[%F{{yellow}}%~%F{{magenta}}]%f
 %F{{magenta}}└───%F{{green}}╼%f '
 RPROMPT=''
 '''
