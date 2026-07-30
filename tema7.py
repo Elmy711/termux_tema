@@ -23,21 +23,21 @@ def hex_to_rgb(h):
 
 THEMES = {
     1: {"name": "Default Termux", "colors": {}, "font": "default"},
-    2: {"name": "Termius Nord", "colors": {"background":"#2E3440","foreground":"#D8DEE9","color0":"#3B4252","color1":"#BF616A","color2":"#A3BE8C","color3":"#EBCB8B","color4":"#81A1C1","color5":"#B48EAD","color6":"#88C0D0","color7":"#E5E9F0","color8":"#4C566A","color9":"#BF616A","color10":"#A3BE8C","color11":"#EBCB8B","color12":"#81A1C1","color13":"#B48EAD","color14":"#8FBCBB","color15":"#ECEFF4"}, "font": "JetBrainsMono"},  # diganti
+    2: {"name": "Termius Nord", "colors": {"background":"#2E3440","foreground":"#D8DEE9","color0":"#3B4252","color1":"#BF616A","color2":"#A3BE8C","color3":"#EBCB8B","color4":"#81A1C1","color5":"#B48EAD","color6":"#88C0D0","color7":"#E5E9F0","color8":"#4C566A","color9":"#BF616A","color10":"#A3BE8C","color11":"#EBCB8B","color12":"#81A1C1","color13":"#B48EAD","color14":"#8FBCBB","color15":"#ECEFF4"}, "font": "JetBrainsMono"}, 
     3: {"name": "Dracula Pink", "colors": {"background":"#282A36","foreground":"#F8F8F2","color0":"#000","color1":"#FF79C6","color2":"#50FA7B","color3":"#F1FA8C","color4":"#BD93F9","color5":"#FF79C6","color6":"#8BE9FD","color7":"#BFBF","color8":"#4D4D4D","color9":"#FF92DF","color10":"#69FF94","color11":"#FFFFA5","color12":"#D6ACFF","color13":"#FF92DF","color14":"#A4FFFF","color15":"#FFFFFF"}, "font": "ZedMono"},
-    4: {"name": "Cyberpunk Neon", "colors": {"background":"#0a0a0f","foreground":"#ff00ff","color0":"#0a0a0f","color1":"#ff0066","color2":"#00ffcc","color3":"#ffff00","color4":"#00aaff","color5":"#ff00ff","color6":"#00ff00","color7":"#ffffff","color8":"#222233","color9":"#ff0066","color10":"#00ffcc","color11":"#ffff00","color12":"#00aaff","color13":"#ff00ff","color14":"#00ff00","color15":"#ffffff"}, "font": "FiraCode"},  # diganti
-    5: {"name": "Gruvbox Black", "colors": {"background":"#000","foreground":"#EBDBB2","color0":"#000","color1":"#CC241D","color2":"#98971A","color3":"#D79921","color4":"#458588","color5":"#B16286","color6":"#689D6A","color7":"#A89984","color8":"#928374","color9":"#FB4934","color10":"#B8BB26","color11":"#FABD2F","color12":"#83A598","color13":"#D3869B","color14":"#8EC07C","color15":"#FDF4C1"}, "font": "VictorMono"},
-    6: {"name": "Tokyo Night Storm","colors": {"background":"#24283b","foreground":"#c0caf5","color0":"#1D202F","color1":"#f7768e","color2":"#9ece6a","color3":"#e0af68","color4":"#7aa2f7","color5":"#bb9af7","color6":"#7dcfff","color7":"#a9b1d6","color8":"#414868","color9":"#f7768e","color10":"#9ece6a","color11":"#e0af68","color12":"#7aa2f7","color13":"#bb9af7","color14":"#7dcfff","color15":"#c0caf5"}, "font": "SourceCodePro"},  # diganti
-    7: {"name": "Everforest Ocean", "colors": {"background":"#2d353b","foreground":"#d3c6aa","color0":"#2d353b","color1":"#e67e80","color2":"#a7c080","color3":"#dbbc7f","color4":"#7fbbb3","color5":"#d699b6","color6":"#83c092","color7":"#d3c6aa","color8":"#475258","color9":"#e67e80","color10":"#a7c080","color11":"#dbbc7f","color12":"#7fbbb3","color13":"#d699b6","color14":"#83c092","color15":"#ffffff"}, "font": "UbuntuMono"},  # diganti
+    4: {"name": "Cyberpunk Neon", "colors": {"background":"#0a0a0f","foreground":"#ff00ff","color0":"#0a0a0f","color1":"#ff0066","color2":"#00ffcc","color3":"#ffff00","color4":"#00aaff","color5":"#ff00ff","color6":"#00ff00","color7":"#ffffff","color8":"#222233","color9":"#ff0066","color10":"#00ffcc","color11":"#ffff00","color12":"#00aaff","color13":"#ff00ff","color14":"#00ff00","color15":"#ffffff"}, "font": "FiraCode"},  
+    55: {"name": "Gruvbox Black", "colors": {"background":"#000","foreground":"#FFFFFF","color0":"#000000","color1":"#FFFFFF","color2":"#FFFFFF","color3":"#FFFFFF","color4":"#FFFFFF","color5":"#FFFFFF","color6":"#FFFFFF","color7":"#FFFFFF","color8":"#444444","color9":"#FFFFFF","color10":"#FFFFFF","color11":"#FFFFFF","color12":"#FFFFFF","color13":"#FFFFFF","color14":"#FFFFFF","color15":"#FFFFFF"}, "font": "VictorMono"},
+    6: {"name": "Tokyo Night Storm","colors": {"background":"#24283b","foreground":"#c0caf5","color0":"#1D202F","color1":"#f7768e","color2":"#9ece6a","color3":"#e0af68","color4":"#7aa2f7","color5":"#bb9af7","color6":"#7dcfff","color7":"#a9b1d6","color8":"#414868","color9":"#f7768e","color10":"#9ece6a","color11":"#e0af68","color12":"#7aa2f7","color13":"#bb9af7","color14":"#7dcfff","color15":"#c0caf5"}, "font": "SourceCodePro"},  
+    7: {"name": "Everforest Ocean", "colors": {"background":"#2d353b","foreground":"#d3c6aa","color0":"#2d353b","color1":"#e67e80","color2":"#a7c080","color3":"#dbbc7f","color4":"#7fbbb3","color5":"#d699b6","color6":"#83c092","color7":"#d3c6aa","color8":"#475258","color9":"#e67e80","color10":"#a7c080","color11":"#dbbc7f","color12":"#7fbbb3","color13":"#d699b6","color14":"#83c092","color15":"#ffffff"}, "font": "UbuntuMono"}, 
 }
 
 FONTS = {
-    "JetBrainsMono": "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.zip",  # baru
+    "JetBrainsMono": "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.zip", 
     "ZedMono": "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/ZedMono.zip",
-    "FiraCode": "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/FiraCode.zip",  # baru
+    "FiraCode": "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/FiraCode.zip",  
     "VictorMono": "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/VictorMono.zip",
-    "SourceCodePro": "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/SourceCodePro.zip",  # baru
-    "UbuntuMono": "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/UbuntuMono.zip"  # baru
+    "SourceCodePro": "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/SourceCodePro.zip",
+    "UbuntuMono": "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/UbuntuMono.zip"  
 }
 
 PROMPT_ZSH = f'''
@@ -135,10 +135,10 @@ def main():
     os.makedirs(FONT_CACHE, exist_ok=True)
 
     while True:
-        print("\n===  💜ELMY0711💖 TEMA TERMUX  ===")
+        print("\n===💜  ELMY0711 TEMA TERMUX  💖===")
         for k, v in THEMES.items(): print(f"{k}. {v['name']:<20} - {v['font']}")
 
-        pilih_input = get_input("\nPilih nomor [1-7] atau q untuk keluar: ")
+        pilih_input = get_input("\nPilih [1-7]  q untuk keluar: ")
         if pilih_input.lower() == 'q':
             print("Keluar")
             sys.exit(0)
@@ -149,12 +149,12 @@ def main():
         pilih = int(pilih_input)
         if pilih in THEMES:
             preview_theme(pilih)
-            y = get_input("\nTerapkan tema ini? [y/n]: ").lower()
+            y = get_input("\nTerapkan tema ? [y/n]: ").lower()
             if y == 'y':
                 apply_theme(pilih)
                 break
             else:
-                print("Batal. Pilih lagi ya")
+                print("Batal. Pilih lagi")
         else:
             print("Nomor tidak ada. Pilih 1-7")
 
