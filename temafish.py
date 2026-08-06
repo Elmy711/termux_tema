@@ -42,7 +42,7 @@ FONTS = {
 }
 
 PROMPT_FISH = '''
-# PROMPT CUSTOM ELMY0711
+# BEGIN PROMPT CUSTOM ELMY0711
 function fish_prompt
     set_color 585858
     echo -n (date "+%a %b %d %H:%M:%S")
@@ -70,13 +70,15 @@ function fish_prompt
 end
 function fish_right_prompt
 end
+# END PROMPT CUSTOM ELMY0711
 '''
 
 ALIAS_FISH = f'''
-# ALIAS TEMA TERMUX
+# BEGIN ALIAS TEMA TERMUX
 alias tema='python {HOME}/termux_tema/tema7.py'
 alias t='python {HOME}/termux_tema/tema7.py'
 alias reload='source ~/.config/fish/config.fish'
+# END ALIAS TEMA TERMUX
 '''
 
 def preview_theme(num):
@@ -125,13 +127,38 @@ def setup_keyboard():
     with open(TERMUX_PROPS, "w") as f:
         f.write(CONFIG_CONTENT)
 
+def remove_block(lines, start_marker, end_marker):
+    result = []
+    skipping = False
+    for line in lines:
+        if start_marker in line:
+            skipping = True
+            continue
+        if end_marker in line:
+            skipping = False
+            continue
+        if not skipping:
+            result.append(line)
+    return result
+
 def apply_prompt_fish():
     os.makedirs(FISH_CONFIG_DIR, exist_ok=True)
     if not os.path.exists(FISH_CONFIG_PATH):
         open(FISH_CONFIG_PATH, "a").close()
-    run(f"sed -i '/PROMPT CUSTOM ELMY0711/,+22d' {FISH_CONFIG_PATH} 2>/dev/null")
-    run(f"sed -i '/ALIAS TEMA TERMUX/,+3d' {FISH_CONFIG_PATH} 2>/dev/null")
-    with open(FISH_CONFIG_PATH, "a") as f:
+
+    with open(FISH_CONFIG_PATH, "r") as f:
+        lines = f.readlines()
+
+    lines = remove_block(lines, "BEGIN PROMPT CUSTOM ELMY0711", "END PROMPT CUSTOM ELMY0711")
+    lines = remove_block(lines, "BEGIN ALIAS TEMA TERMUX", "END ALIAS TEMA TERMUX")
+
+    # buang baris kosong berlebih di akhir sebelum nulis blok baru
+    while lines and lines[-1].strip() == "":
+        lines.pop()
+
+    with open(FISH_CONFIG_PATH, "w") as f:
+        f.writelines(lines)
+        f.write("\n")
         f.write(PROMPT_FISH)
         f.write(ALIAS_FISH)
 
@@ -186,4 +213,3 @@ def main():
             print("Nomor tidak ada. Pilih 1-7")
 
 if __name__ == "__main__": main()
-
