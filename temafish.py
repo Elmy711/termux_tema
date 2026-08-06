@@ -127,19 +127,37 @@ def setup_keyboard():
     with open(TERMUX_PROPS, "w") as f:
         f.write(CONFIG_CONTENT)
 
-def remove_block(lines, start_marker, end_marker):
+def strip_function_block(lines, func_name):
+    """Buang blok 'function <func_name> ... end' di manapun ditemukan,
+    termasuk sisa dari versi script lama yang formatnya beda."""
     result = []
-    skipping = False
-    for line in lines:
-        if start_marker in line:
-            skipping = True
+    i = 0
+    n = len(lines)
+    while i < n:
+        if lines[i].strip() == f"function {func_name}":
+            i += 1
+            while i < n and lines[i].strip() != "end":
+                i += 1
+            i += 1  # lewati baris "end"-nya juga
             continue
-        if end_marker in line:
-            skipping = False
-            continue
-        if not skipping:
-            result.append(line)
+        result.append(lines[i])
+        i += 1
     return result
+
+def purge_managed_fish_content(lines):
+    """Bersihin semua jejak konfigurasi kita (versi lama maupun baru)
+    sebelum nulis ulang, biar gak numpuk/rusak."""
+    lines = strip_function_block(lines, "fish_prompt")
+    lines = strip_function_block(lines, "fish_right_prompt")
+    cleaned = []
+    for line in lines:
+        s = line.strip()
+        if s.startswith("#") and ("ELMY0711" in s or "TEMA TERMUX" in s):
+            continue
+        if s.startswith("alias tema=") or s.startswith("alias t=") or s.startswith("alias reload="):
+            continue
+        cleaned.append(line)
+    return cleaned
 
 def apply_prompt_fish():
     os.makedirs(FISH_CONFIG_DIR, exist_ok=True)
@@ -149,10 +167,8 @@ def apply_prompt_fish():
     with open(FISH_CONFIG_PATH, "r") as f:
         lines = f.readlines()
 
-    lines = remove_block(lines, "BEGIN PROMPT CUSTOM ELMY0711", "END PROMPT CUSTOM ELMY0711")
-    lines = remove_block(lines, "BEGIN ALIAS TEMA TERMUX", "END ALIAS TEMA TERMUX")
+    lines = purge_managed_fish_content(lines)
 
-    # buang baris kosong berlebih di akhir sebelum nulis blok baru
     while lines and lines[-1].strip() == "":
         lines.pop()
 
