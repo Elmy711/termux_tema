@@ -11,7 +11,8 @@ FISH_CONFIG_DIR = f"{HOME}/.config/fish"
 FISH_CONFIG_PATH = f"{FISH_CONFIG_DIR}/config.fish"
 TERMUX_PROPS = f"{HOME}/.termux/termux.properties"
 
-CONFIG_CONTENT = 'extra-keys = [["ESC","python3 ","go","HOME","UP","END","PGUP","DEL"],["tema","CTRL","BKSP","LEFT","DOWN","RIGHT","PGDN","~"],["ls","cd ","clear","ENTER","pkg ","git pull","rm -rf","exit"]]'
+# Tombol "tema" sekarang mengirim "tema" + ENTER (dengan \n)
+CONFIG_CONTENT = 'extra-keys = [["ESC","python3 ","go","HOME","UP","END","PGUP","DEL"],["tema\\n","CTRL","BKSP","LEFT","DOWN","RIGHT","PGDN","~"],["ls","cd ","clear","ENTER","pkg ","git pull","rm -rf","exit"]]'
 
 def run(cmd):
     subprocess.run(cmd, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
@@ -69,7 +70,6 @@ alias reload='source ~/.config/fish/config.fish'
 '''
 
 def generate_fish_prompt(colors):
-    # Jika colors kosong, gunakan fallback default
     if not colors:
         colors = {
             "background": "#000000",
@@ -91,13 +91,12 @@ def generate_fish_prompt(colors):
             "color14": "#00ffff",
             "color15": "#ffffff"
         }
-    # Ambil warna yang dibutuhkan dari tema
-    c1 = colors.get('color1', '#ff0000')   # merah
-    c2 = colors.get('color2', '#00ff00')   # hijau
-    c3 = colors.get('color3', '#ffff00')   # kuning
-    c4 = colors.get('color4', '#0000ff')   # biru
-    c5 = colors.get('color5', '#ff00ff')   # magenta
-    c6 = colors.get('color6', '#00ffff')   # cyan
+    c1 = colors.get('color1', '#ff0000')
+    c2 = colors.get('color2', '#00ff00')
+    c3 = colors.get('color3', '#ffff00')
+    c4 = colors.get('color4', '#0000ff')
+    c5 = colors.get('color5', '#ff00ff')
+    c6 = colors.get('color6', '#00ffff')
     fg = colors.get('foreground', '#ffffff')
     bg = colors.get('background', '#000000')
 
@@ -181,8 +180,6 @@ def setup_keyboard():
         f.write(CONFIG_CONTENT)
 
 def strip_function_block(lines, func_name):
-    """Buang blok 'function <func_name> ... end' di manapun ditemukan,
-    termasuk sisa dari versi script lama yang formatnya beda."""
     result = []
     i = 0
     n = len(lines)
@@ -191,15 +188,13 @@ def strip_function_block(lines, func_name):
             i += 1
             while i < n and lines[i].strip() != "end":
                 i += 1
-            i += 1  # lewati baris "end"-nya juga
+            i += 1
             continue
         result.append(lines[i])
         i += 1
     return result
 
 def purge_managed_fish_content(lines):
-    """Bersihin semua jejak konfigurasi kita (versi lama maupun baru)
-    sebelum nulis ulang, biar gak numpuk/rusak."""
     lines = strip_function_block(lines, "fish_prompt")
     lines = strip_function_block(lines, "fish_right_prompt")
     cleaned = []
@@ -242,7 +237,7 @@ def apply_theme(num):
     else:
         if os.path.exists(COLORS_PATH): os.remove(COLORS_PATH)
     download_font(theme["font"])
-    apply_prompt_fish(theme["colors"])   # <-- sekarang prompt disesuaikan dengan tema
+    apply_prompt_fish(theme["colors"])
     setup_keyboard()
     print("\nSelesai! Force close Termux dari recent apps lalu buka lagi")
 
