@@ -7,10 +7,9 @@ COLORS_PATH = f"{HOME}/.termux/colors.properties"
 FONT_PATH = f"{HOME}/.termux/font.ttf"
 FONT_CACHE = f"{HOME}/.termux/font_cache"
 TMP_DIR = f"{HOME}/.termux/fonts_tmp"
-ZSHRC_PATH = f"{HOME}/.zshrc"
+FISH_CONFIG_DIR = f"{HOME}/.config/fish"
+FISH_CONFIG_PATH = f"{FISH_CONFIG_DIR}/config.fish"
 TERMUX_PROPS = f"{HOME}/.termux/termux.properties"
-
-CONFIG_CONTENT = 'extra-keys = [["ESC","python3 ","go","HOME","UP","END","PGUP","DEL"],["tema","CTRL","BKSP","LEFT","DOWN","RIGHT","PGDN","~"],["ls","cd ","clear","ENTER","pkg ","git pull","rm -rf","exit"]]'
 
 def run(cmd):
     subprocess.run(cmd, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
@@ -22,7 +21,26 @@ def hex_to_rgb(h):
     return int(h[0:2],16), int(h[2:4],16), int(h[4:6],16)
 
 THEMES = {
-    1: {"name": "Default Termux", "colors": {}, "font": "default"},
+    1: {"name": "Default Termux", "colors": {
+        "background": "#000000",
+        "foreground": "#ffffff",
+        "color0": "#000000",
+        "color1": "#ff0000",
+        "color2": "#00ff00",
+        "color3": "#ffff00",
+        "color4": "#0000ff",
+        "color5": "#ff00ff",
+        "color6": "#00ffff",
+        "color7": "#ffffff",
+        "color8": "#444444",
+        "color9": "#ff0000",
+        "color10": "#00ff00",
+        "color11": "#ffff00",
+        "color12": "#0000ff",
+        "color13": "#ff00ff",
+        "color14": "#00ffff",
+        "color15": "#ffffff"
+    }, "font": "default"},
     2: {"name": "Termius Nord", "colors": {"background":"#2E3440","foreground":"#D8DEE9","color0":"#3B4252","color1":"#BF616A","color2":"#A3BE8C","color3":"#EBCB8B","color4":"#81A1C1","color5":"#B48EAD","color6":"#88C0D0","color7":"#E5E9F0","color8":"#4C566A","color9":"#BF616A","color10":"#A3BE8C","color11":"#EBCB8B","color12":"#81A1C1","color13":"#B48EAD","color14":"#8FBCBB","color15":"#ECEFF4"}, "font": "JetBrainsMono"}, 
     3: {"name": "Dracula Pink", "colors": {"background":"#282A36","foreground":"#F8F8F2","color0":"#000","color1":"#FF79C6","color2":"#50FA7B","color3":"#F1FA8C","color4":"#BD93F9","color5":"#FF79C6","color6":"#8BE9FD","color7":"#BFBF","color8":"#4D4D4D","color9":"#FF92DF","color10":"#69FF94","color11":"#FFFFA5","color12":"#D6ACFF","color13":"#FF92DF","color14":"#A4FFFF","color15":"#FFFFFF"}, "font": "ZedMono"},
     4: {"name": "Cyberpunk Neon", "colors": {"background":"#0a0a0f","foreground":"#ff00ff","color0":"#0a0a0f","color1":"#ff0066","color2":"#00ffcc","color3":"#ffff00","color4":"#00aaff","color5":"#ff00ff","color6":"#00ff00","color7":"#ffffff","color8":"#222233","color9":"#ff0066","color10":"#00ffcc","color11":"#ffff00","color12":"#00aaff","color13":"#ff00ff","color14":"#00ff00","color15":"#ffffff"}, "font": "FiraCode"},  
@@ -40,21 +58,77 @@ FONTS = {
     "UbuntuMono": "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/UbuntuMono.zip"  
 }
 
-PROMPT_ZSH = f'''
-# PROMPT CUSTOM ELMY0711
-autoload -U colors && colors
-PROMPT='%F{{240}}%D{{%a %b %d %H:%M:%S}}%f
-%F{{magenta}}┌─%F{{red}}💖%F{{magenta}}ELMY0711%F{{red}}💜%F{{magenta}}─[%F{{yellow}}%~%F{{magenta}}]%f
-%F{{magenta}}└───%F{{green}}╼%f '
-RPROMPT=''
-'''
-
-ALIAS_ZSH = f'''
-# ALIAS TEMA TERMUX
+ALIAS_FISH = f'''
+# BEGIN ALIAS TEMA TERMUX
 alias tema='python {HOME}/termux_tema/tema7.py'
 alias t='python {HOME}/termux_tema/tema7.py'
-alias reload='source ~/.zshrc'
+alias reload='source ~/.config/fish/config.fish'
+# END ALIAS TEMA TERMUX
 '''
+
+def generate_fish_prompt(colors):
+    if not colors:
+        colors = {
+            "background": "#000000",
+            "foreground": "#ffffff",
+            "color0": "#000000",
+            "color1": "#ff0000",
+            "color2": "#00ff00",
+            "color3": "#ffff00",
+            "color4": "#0000ff",
+            "color5": "#ff00ff",
+            "color6": "#00ffff",
+            "color7": "#ffffff",
+            "color8": "#444444",
+            "color9": "#ff0000",
+            "color10": "#00ff00",
+            "color11": "#ffff00",
+            "color12": "#0000ff",
+            "color13": "#ff00ff",
+            "color14": "#00ffff",
+            "color15": "#ffffff"
+        }
+    c1 = colors.get('color1', '#ff0000')
+    c2 = colors.get('color2', '#00ff00')
+    c3 = colors.get('color3', '#ffff00')
+    c4 = colors.get('color4', '#0000ff')
+    c5 = colors.get('color5', '#ff00ff')
+    c6 = colors.get('color6', '#00ffff')
+    fg = colors.get('foreground', '#ffffff')
+    bg = colors.get('background', '#000000')
+
+    prompt = f'''
+# BEGIN PROMPT CUSTOM ELMY0711
+function fish_prompt
+    set_color {c6}
+    echo -n (date "+%a %b %d %H:%M:%S")
+    echo ""
+    set_color {c5}
+    echo -n "┌─"
+    set_color {c1}
+    echo -n "💖"
+    set_color {c5}
+    echo -n "ELMY0711"
+    set_color {c1}
+    echo -n "💜"
+    set_color {c5}
+    echo -n "─["
+    set_color {c3}
+    echo -n (prompt_pwd)
+    set_color {c5}
+    echo -n "]"
+    echo ""
+    set_color {c5}
+    echo -n "└───"
+    set_color {c2}
+    echo -n "╼ "
+    set_color normal
+end
+function fish_right_prompt
+end
+# END PROMPT CUSTOM ELMY0711
+'''
+    return prompt
 
 def preview_theme(num):
     theme = THEMES[num]
@@ -99,15 +173,60 @@ def download_font(font_name):
 def setup_keyboard():
     print("Setting up keyboard...")
     os.makedirs(f"{HOME}/.termux", exist_ok=True)
+    # Tombol langsung memanggil script (tanpa alias) agar pasti berfungsi
+    script_path = f"{HOME}/termux_tema/tema7.py"
+    config = f'''extra-keys = [["ESC","python3 ","go","HOME","UP","END","PGUP","DEL"],["python3 {script_path}\\n","CTRL","BKSP","LEFT","DOWN","RIGHT","PGDN","~"],["ls","cd ","clear","ENTER","pkg ","git pull","rm -rf","exit"]]'''
     with open(TERMUX_PROPS, "w") as f:
-        f.write(CONFIG_CONTENT)
+        f.write(config)
 
-def apply_prompt():
-    run("sed -i '/PROMPT CUSTOM ELMY0711/,+5d' ~/.zshrc 2>/dev/null")
-    run("sed -i '/ALIAS TEMA TERMUX/,+4d' ~/.zshrc 2>/dev/null")
-    with open(ZSHRC_PATH, "a") as f:
-        f.write(PROMPT_ZSH)
-        f.write(ALIAS_ZSH)
+def strip_function_block(lines, func_name):
+    result = []
+    i = 0
+    n = len(lines)
+    while i < n:
+        if lines[i].strip() == f"function {func_name}":
+            i += 1
+            while i < n and lines[i].strip() != "end":
+                i += 1
+            i += 1
+            continue
+        result.append(lines[i])
+        i += 1
+    return result
+
+def purge_managed_fish_content(lines):
+    lines = strip_function_block(lines, "fish_prompt")
+    lines = strip_function_block(lines, "fish_right_prompt")
+    cleaned = []
+    for line in lines:
+        s = line.strip()
+        if s.startswith("#") and ("ELMY0711" in s or "TEMA TERMUX" in s):
+            continue
+        if s.startswith("alias tema=") or s.startswith("alias t=") or s.startswith("alias reload="):
+            continue
+        cleaned.append(line)
+    return cleaned
+
+def apply_prompt_fish(colors):
+    os.makedirs(FISH_CONFIG_DIR, exist_ok=True)
+    if not os.path.exists(FISH_CONFIG_PATH):
+        open(FISH_CONFIG_PATH, "a").close()
+
+    with open(FISH_CONFIG_PATH, "r") as f:
+        lines = f.readlines()
+
+    lines = purge_managed_fish_content(lines)
+
+    while lines and lines[-1].strip() == "":
+        lines.pop()
+
+    prompt_code = generate_fish_prompt(colors)
+
+    with open(FISH_CONFIG_PATH, "w") as f:
+        f.writelines(lines)
+        f.write("\n")
+        f.write(prompt_code)
+        f.write(ALIAS_FISH)
 
 def apply_theme(num):
     theme = THEMES[num]
@@ -118,9 +237,10 @@ def apply_theme(num):
     else:
         if os.path.exists(COLORS_PATH): os.remove(COLORS_PATH)
     download_font(theme["font"])
-    apply_prompt()
+    apply_prompt_fish(theme["colors"])
     setup_keyboard()
     print("\nSelesai! Force close Termux dari recent apps lalu buka lagi")
+    print("Tombol 'tema' (baris kedua) sekarang langsung menjalankan script tema.")
 
 def get_input(prompt):
     try:
@@ -130,8 +250,9 @@ def get_input(prompt):
 
 def main():
     print("Cek deps...")
-    run("pkg install curl unzip zsh -y")
-    run("chsh -s zsh 2>/dev/null")
+    run("pkg install curl unzip fish -y")
+    run("chsh -s fish 2>/dev/null")
+
     os.makedirs(FONT_CACHE, exist_ok=True)
 
     while True:
