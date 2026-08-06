@@ -23,7 +23,26 @@ def hex_to_rgb(h):
     return int(h[0:2],16), int(h[2:4],16), int(h[4:6],16)
 
 THEMES = {
-    1: {"name": "Default Termux", "colors": {}, "font": "default"},
+    1: {"name": "Default Termux", "colors": {
+        "background": "#000000",
+        "foreground": "#ffffff",
+        "color0": "#000000",
+        "color1": "#ff0000",
+        "color2": "#00ff00",
+        "color3": "#ffff00",
+        "color4": "#0000ff",
+        "color5": "#ff00ff",
+        "color6": "#00ffff",
+        "color7": "#ffffff",
+        "color8": "#444444",
+        "color9": "#ff0000",
+        "color10": "#00ff00",
+        "color11": "#ffff00",
+        "color12": "#0000ff",
+        "color13": "#ff00ff",
+        "color14": "#00ffff",
+        "color15": "#ffffff"
+    }, "font": "default"},
     2: {"name": "Termius Nord", "colors": {"background":"#2E3440","foreground":"#D8DEE9","color0":"#3B4252","color1":"#BF616A","color2":"#A3BE8C","color3":"#EBCB8B","color4":"#81A1C1","color5":"#B48EAD","color6":"#88C0D0","color7":"#E5E9F0","color8":"#4C566A","color9":"#BF616A","color10":"#A3BE8C","color11":"#EBCB8B","color12":"#81A1C1","color13":"#B48EAD","color14":"#8FBCBB","color15":"#ECEFF4"}, "font": "JetBrainsMono"}, 
     3: {"name": "Dracula Pink", "colors": {"background":"#282A36","foreground":"#F8F8F2","color0":"#000","color1":"#FF79C6","color2":"#50FA7B","color3":"#F1FA8C","color4":"#BD93F9","color5":"#FF79C6","color6":"#8BE9FD","color7":"#BFBF","color8":"#4D4D4D","color9":"#FF92DF","color10":"#69FF94","color11":"#FFFFA5","color12":"#D6ACFF","color13":"#FF92DF","color14":"#A4FFFF","color15":"#FFFFFF"}, "font": "ZedMono"},
     4: {"name": "Cyberpunk Neon", "colors": {"background":"#0a0a0f","foreground":"#ff00ff","color0":"#0a0a0f","color1":"#ff0066","color2":"#00ffcc","color3":"#ffff00","color4":"#00aaff","color5":"#ff00ff","color6":"#00ff00","color7":"#ffffff","color8":"#222233","color9":"#ff0066","color10":"#00ffcc","color11":"#ffff00","color12":"#00aaff","color13":"#ff00ff","color14":"#00ff00","color15":"#ffffff"}, "font": "FiraCode"},  
@@ -41,38 +60,6 @@ FONTS = {
     "UbuntuMono": "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/UbuntuMono.zip"  
 }
 
-PROMPT_FISH = '''
-# BEGIN PROMPT CUSTOM ELMY0711
-function fish_prompt
-    set_color 585858
-    echo -n (date "+%a %b %d %H:%M:%S")
-    echo ""
-    set_color magenta
-    echo -n "┌─"
-    set_color red
-    echo -n "💖"
-    set_color magenta
-    echo -n "ELMY0711"
-    set_color red
-    echo -n "💜"
-    set_color magenta
-    echo -n "─["
-    set_color yellow
-    echo -n (prompt_pwd)
-    set_color magenta
-    echo -n "]"
-    echo ""
-    set_color magenta
-    echo -n "└───"
-    set_color green
-    echo -n "╼ "
-    set_color normal
-end
-function fish_right_prompt
-end
-# END PROMPT CUSTOM ELMY0711
-'''
-
 ALIAS_FISH = f'''
 # BEGIN ALIAS TEMA TERMUX
 alias tema='python {HOME}/termux_tema/tema7.py'
@@ -80,6 +67,72 @@ alias t='python {HOME}/termux_tema/tema7.py'
 alias reload='source ~/.config/fish/config.fish'
 # END ALIAS TEMA TERMUX
 '''
+
+def generate_fish_prompt(colors):
+    # Jika colors kosong, gunakan fallback default
+    if not colors:
+        colors = {
+            "background": "#000000",
+            "foreground": "#ffffff",
+            "color0": "#000000",
+            "color1": "#ff0000",
+            "color2": "#00ff00",
+            "color3": "#ffff00",
+            "color4": "#0000ff",
+            "color5": "#ff00ff",
+            "color6": "#00ffff",
+            "color7": "#ffffff",
+            "color8": "#444444",
+            "color9": "#ff0000",
+            "color10": "#00ff00",
+            "color11": "#ffff00",
+            "color12": "#0000ff",
+            "color13": "#ff00ff",
+            "color14": "#00ffff",
+            "color15": "#ffffff"
+        }
+    # Ambil warna yang dibutuhkan dari tema
+    c1 = colors.get('color1', '#ff0000')   # merah
+    c2 = colors.get('color2', '#00ff00')   # hijau
+    c3 = colors.get('color3', '#ffff00')   # kuning
+    c4 = colors.get('color4', '#0000ff')   # biru
+    c5 = colors.get('color5', '#ff00ff')   # magenta
+    c6 = colors.get('color6', '#00ffff')   # cyan
+    fg = colors.get('foreground', '#ffffff')
+    bg = colors.get('background', '#000000')
+
+    prompt = f'''
+# BEGIN PROMPT CUSTOM ELMY0711
+function fish_prompt
+    set_color {c6}
+    echo -n (date "+%a %b %d %H:%M:%S")
+    echo ""
+    set_color {c5}
+    echo -n "┌─"
+    set_color {c1}
+    echo -n "💖"
+    set_color {c5}
+    echo -n "ELMY0711"
+    set_color {c1}
+    echo -n "💜"
+    set_color {c5}
+    echo -n "─["
+    set_color {c3}
+    echo -n (prompt_pwd)
+    set_color {c5}
+    echo -n "]"
+    echo ""
+    set_color {c5}
+    echo -n "└───"
+    set_color {c2}
+    echo -n "╼ "
+    set_color normal
+end
+function fish_right_prompt
+end
+# END PROMPT CUSTOM ELMY0711
+'''
+    return prompt
 
 def preview_theme(num):
     theme = THEMES[num]
@@ -159,7 +212,7 @@ def purge_managed_fish_content(lines):
         cleaned.append(line)
     return cleaned
 
-def apply_prompt_fish():
+def apply_prompt_fish(colors):
     os.makedirs(FISH_CONFIG_DIR, exist_ok=True)
     if not os.path.exists(FISH_CONFIG_PATH):
         open(FISH_CONFIG_PATH, "a").close()
@@ -172,10 +225,12 @@ def apply_prompt_fish():
     while lines and lines[-1].strip() == "":
         lines.pop()
 
+    prompt_code = generate_fish_prompt(colors)
+
     with open(FISH_CONFIG_PATH, "w") as f:
         f.writelines(lines)
         f.write("\n")
-        f.write(PROMPT_FISH)
+        f.write(prompt_code)
         f.write(ALIAS_FISH)
 
 def apply_theme(num):
@@ -187,7 +242,7 @@ def apply_theme(num):
     else:
         if os.path.exists(COLORS_PATH): os.remove(COLORS_PATH)
     download_font(theme["font"])
-    apply_prompt_fish()
+    apply_prompt_fish(theme["colors"])   # <-- sekarang prompt disesuaikan dengan tema
     setup_keyboard()
     print("\nSelesai! Force close Termux dari recent apps lalu buka lagi")
 
