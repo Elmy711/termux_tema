@@ -104,7 +104,7 @@ function fish_prompt
     echo -n (date "+%a %b %d %H:%M:%S")
     echo ""
     set_color {c5}
-    echo -n "┌─"
+    echo -n "╭─"
     set_color {c1}
     echo -n "💖"
     set_color {c5}
@@ -119,8 +119,8 @@ function fish_prompt
     echo -n "]"
     echo ""
     set_color {c5}
-    echo -n "└───"
-    set_color {c2}
+    echo -n "╰─"
+    set_color {c5}
     echo -n "╼ "
     set_color normal
 end
