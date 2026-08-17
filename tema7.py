@@ -101,7 +101,7 @@ def generate_fish_prompt(colors):
 # BEGIN PROMPT CUSTOM ELMY0711
 function fish_prompt
     set_color {c6}
-    echo -n (date "+%a %b %d %H:%M:%S")
+    echo -n (date "+%b %d %H:%M:%S")
     echo ""
     set_color {c5}
     echo -n "╭─"
