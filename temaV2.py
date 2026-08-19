@@ -1,7 +1,10 @@
 import os, urllib.request, subprocess, glob
+
 TERMUX_DIR = os.path.expanduser("~/.termux")
 FONT_DIR = TERMUX_DIR
 FONT_TTF = os.path.join(TERMUX_DIR, "font.ttf")
+PROP_FILE = os.path.join(TERMUX_DIR, "termux.properties")
+STARSHIP_CONFIG = os.path.expanduser("~/.config/starship.toml")
 
 THEMES = {
     1: {"name": "Monokai Pro", "font": "FiraCode", "colors": {"background": "#2d2a2e", "foreground": "#fcfcfa", "color0": "#2d2a2e", "color1": "#ff6188", "color2": "#a9dc76", "color3": "#ffd866", "color4": "#78dce8", "color5": "#ab9df2", "color6": "#73d0ff", "color7": "#fcfcfa", "color8": "#727072", "color9": "#ff6188", "color10": "#a9dc76", "color11": "#ffd866", "color12": "#78dce8", "color13": "#ab9df2", "color14": "#73d0ff", "color15": "#ffffff"}},
@@ -17,20 +20,49 @@ THEMES = {
 }
 FONT_URLS = {"FiraCode": "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/FiraCode.tar.xz", "JetBrainsMono": "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/JetBrainsMono.tar.xz", "CascadiaCode": "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/CascadiaCode.tar.xz", "Hack": "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/Hack.tar.xz", "VictorMono": "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/VictorMono.tar.xz"}
 
-def download_font(n):
-    print(f"[+] Download {n}...")
-    f = f"{FONT_DIR}/{n}.tar.xz"
-    urllib.request.urlretrieve(FONT_URLS[n], f)
-    subprocess.run(["tar","-xf",f,"-C",FONT_DIR])
-    ttf = glob.glob(f"{FONT_DIR}/*.ttf")[0] # ambil file ttf pertama
-    subprocess.run(["mv", ttf, FONT_TTF])
-    subprocess.run(["rm", f])
+def download_all_fonts():
+    fonts = list(set([v["font"] for v in THEMES.values()])) # ambil font unik doang
+    print(f"[+] Download 5 font sekaligus: {', '.join(fonts)}")
+    for f in fonts:
+        if os.path.exists(f"{FONT_DIR}/{f}.done"):
+            print(f"[=] {f} sudah ada, skip")
+            continue
+        url = FONT_URLS[f]
+        file = f"{FONT_DIR}/{f}.tar.xz"
+        urllib.request.urlretrieve(url, file)
+        subprocess.run(["tar","-xf",file,"-C",FONT_DIR])
+        subprocess.run(["rm", file])
+        open(f"{FONT_DIR}/{f}.done", "w").close() # penanda udah download
+    print("[+] Semua font selesai")
 
-def apply(t):
-    with open(f"{TERMUX_DIR}/colors.properties","w") as f: [f.write(f"{k} = {v}\n") for k,v in THEMES[t]["colors"].items()]
-    if os.path.exists(FONT_TTF): os.remove(FONT_TTF)
-    download_font(THEMES[t]["font"]); subprocess.run(["termux-reload-settings"]); print(f"[SUKSES] {THEMES[t]['name']}")
+def setup_all():
+    print("[+] Setting Starship ELMY...")
+    os.makedirs(os.path.dirname(STARSHIP_CONFIG), exist_ok=True)
+    with open(STARSHIP_CONFIG, "w") as f:
+        f.write('format = "$directory$git_branch$git_status$cmd_duration$line_break$character"\n[character]\nsuccess_symbol = "[╰─>](bold purple)"\n[directory]\nformat = "[╭─💖ELMY0711💜─[$path]]($style)"\nstyle = "bold cyan"\n')
+
+    print("[+] Setting Keyboard + Transparan...")
+    with open(PROP_FILE, "w") as f:
+        f.write('extra-keys = [["ESC","|","/","HOME","UP","END","PGUP","DEL"],["TAB","CTRL","ALT","LEFT","DOWN","RIGHT","PGDN","BKSP"]]\nbackground_transparency = 90\n')
+
+def apply_theme(t):
+    theme = THEMES[t]
+    ttf = glob.glob(f"{FONT_DIR}/*.ttf")[0] # ambil ttf pertama
+    subprocess.run(["cp", ttf, FONT_TTF])
+    with open(f"{TERMUX_DIR}/colors.properties","w") as f: [f.write(f"{k} = {v}\n") for k,v in theme["colors"].items()]
+    subprocess.run(["termux-reload-settings"])
+    print(f"\n[SUKSES] {theme['name']} aktif!")
 
 def main():
-    print("="*30); [print(f"{k}. {v['name']}") for k,v in THEMES.items()]; apply(int(input("Pilih: ")))
+    print("="*45)
+    print(" INSTALLER SEMUA TEMA + FONT + SETTING ")
+    print("="*45)
+    setup_all()
+    download_all_fonts()
+    print("\nPilih tema default:")
+    [print(f"{k}. {v['name']}") for k,v in THEMES.items()]
+    apply_theme(int(input("Pilih [1-10]: ")))
+    print("\nSELESAI! Force close Termux lalu buka lagi")
+    print("Mau ganti tema tinggal edit colors.properties + font.ttf manual")
+
 if __name__=="__main__": main()
