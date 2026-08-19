@@ -38,19 +38,30 @@ def download_all_fonts():
 
 def setup_all():
     print("[+] Setting Alias 'tema'...")
-    alias_cmd = f"alias tema='python3 {os.path.expanduser('~')}/termux_tema/install_all_v3.py'\n"
-    with open(BASHRC, "a") as f:
-        if "alias tema=" not in open(BASHRC).read():
-            f.write(alias_cmd)
+    shell = os.environ.get('SHELL','')
+    script_path = os.path.expanduser("~/termux_tema/temaV2.py") # <-- INI PATH LENGKAPNYA
+    alias_cmd_bash = f"alias tema='python3 {script_path}'\n"
+    alias_cmd_fish = f"alias tema 'python3 {script_path}'\n"
+
+    if 'fish' in shell:
+        alias_file = os.path.expanduser("~/.config/fish/config.fish")
+        os.makedirs(os.path.dirname(alias_file), exist_ok=True)
+        with open(alias_file, "a") as f:
+            if "alias tema" not in open(alias_file).read():
+                f.write(alias_cmd_fish)
+    else:
+        alias_file = os.path.expanduser("~/.bashrc")
+        with open(alias_file, "a") as f:
+            if "alias tema=" not in open(alias_file).read():
+                f.write(alias_cmd_bash)
 
     print("[+] Setting Starship ELMY...")
     os.makedirs(os.path.dirname(STARSHIP_CONFIG), exist_ok=True)
     with open(STARSHIP_CONFIG, "w") as f:
         f.write('format = "$directory$git_branch$git_status$cmd_duration$line_break$character"\n[character]\nsuccess_symbol = "[╰─>](bold purple)"\n[directory]\nformat = "[╭─💖ELMY0711💜─[$path]]($style)"\nstyle = "bold cyan"\n')
 
-    print("[+] Setting Keyboard V3.1 - ADA TOMBOL TEMA...")
-    script_path = os.path.expanduser("~")
-    config = f'''extra-keys = [["bash ","python3 ","nano ","TEMA ","UP","END","PGUP","node "],["TEMA\\n","CTRL","BKSP","LEFT","DOWN","RIGHT","git clone ","curl -i "],["ls","cd ","clear","ENTER","ping ","git pull","rm -rf","exit"]]
+    print("[+] Setting Keyboard V3.2 - TOMBOL TEMA PKE PATH...")
+    config = f'''extra-keys = [["bash ","python3 ","nano ","TEMA ","UP","END","PGUP","node "],["python3 {script_path}\\n","CTRL","BKSP","LEFT","DOWN","RIGHT","git clone ","curl -i "],["ls","cd ","clear","ENTER","ping ","git pull","rm -rf","exit"]]
 background_transparency = 85
 use_black_cursor = false
 '''
