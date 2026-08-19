@@ -1,4 +1,4 @@
-import os, urllib.request, subprocess
+import os, urllib.request, subprocess, glob
 TERMUX_DIR = os.path.expanduser("~/.termux")
 FONT_DIR = TERMUX_DIR
 FONT_TTF = os.path.join(TERMUX_DIR, "font.ttf")
@@ -16,11 +16,21 @@ THEMES = {
     10: {"name": "Dracula", "font": "VictorMono", "colors": {"background": "#282a36", "foreground": "#f8f8f2", "color0": "#21222c", "color1": "#ff5555", "color2": "#50fa7b", "color3": "#f1fa8c", "color4": "#bd93f9", "color5": "#ff79c6", "color6": "#8be9fd", "color7": "#f8f8f2", "color8": "#6272a4", "color9": "#ff5555", "color10": "#50fa7b", "color11": "#f1fa8c", "color12": "#bd93f9", "color13": "#ff79c6", "color14": "#8be9fd", "color15": "#ffffff"}}
 }
 FONT_URLS = {"FiraCode": "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/FiraCode.tar.xz", "JetBrainsMono": "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/JetBrainsMono.tar.xz", "CascadiaCode": "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/CascadiaCode.tar.xz", "Hack": "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/Hack.tar.xz", "VictorMono": "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/VictorMono.tar.xz"}
-def download_font(n): urllib.request.urlretrieve(FONT_URLS[n], f"{FONT_DIR}/{n}.tar.xz"); subprocess.run(["tar","-xf",f"{FONT_DIR}/{n}.tar.xz","-C",FONT_DIR]); subprocess.run(["mv",f"{FONT_DIR}/{n}NerdFont-Regular.ttf",FONT_TTF]); subprocess.run(["rm",f"{FONT_DIR}/{n}.tar.xz"])
+
+def download_font(n):
+    print(f"[+] Download {n}...")
+    f = f"{FONT_DIR}/{n}.tar.xz"
+    urllib.request.urlretrieve(FONT_URLS[n], f)
+    subprocess.run(["tar","-xf",f,"-C",FONT_DIR])
+    ttf = glob.glob(f"{FONT_DIR}/*.ttf")[0] # ambil file ttf pertama
+    subprocess.run(["mv", ttf, FONT_TTF])
+    subprocess.run(["rm", f])
+
 def apply(t):
- with open(f"{TERMUX_DIR}/colors.properties","w") as f: [f.write(f"{k} = {v}\n") for k,v in THEMES[t]["colors"].items()]
- if os.path.exists(FONT_TTF): os.remove(FONT_TTF)
- download_font(THEMES[t]["font"]); subprocess.run(["termux-reload-settings"]); print(f"[SUKSES] {THEMES[t]['name']}")
+    with open(f"{TERMUX_DIR}/colors.properties","w") as f: [f.write(f"{k} = {v}\n") for k,v in THEMES[t]["colors"].items()]
+    if os.path.exists(FONT_TTF): os.remove(FONT_TTF)
+    download_font(THEMES[t]["font"]); subprocess.run(["termux-reload-settings"]); print(f"[SUKSES] {THEMES[t]['name']}")
+
 def main():
- print("="*30); [print(f"{k}. {v['name']}") for k,v in THEMES.items()]; apply(int(input("Pilih: ")))
+    print("="*30); [print(f"{k}. {v['name']}") for k,v in THEMES.items()]; apply(int(input("Pilih: ")))
 if __name__=="__main__": main()
