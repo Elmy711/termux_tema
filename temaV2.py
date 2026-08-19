@@ -142,7 +142,7 @@ def setup_keyboard():
     print("Setting up keyboard...")
     os.makedirs(f"{HOME}/.termux", exist_ok=True)
     script_path = f"{HOME}/termux_tema/temaV2.py"
-    config = f'''extra-keys = [["bash ","python3 ","nano ","go run ","UP","END","PGUP","node "],["python3 {script_path}\\n","CTRL","BKSP","LEFT","DOWN","RIGHT","git clone ","curl -i "],["ls","cd ","clear","ENTER","ping ","git pull","rm -rf","exit"]]'''
+    config = f'''extra-keys = [["bash ","python3 ","nano ","go run ","UP","END","PGUP","node "],["python3 {script_path}\\n","CTRL","BKSP","LEFT","DOWN","RIGHT","git clone ","curl -i "],["ls","cd ","clear","ENTER","ping ","git pull","rm -rf ","exit"]]'''
     with open(TERMUX_PROPS, "w") as f:
         f.write(config)
 
