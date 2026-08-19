@@ -116,24 +116,24 @@ def preview_theme(num):
 def download_font(font_name):
     if font_name == "default":
         if os.path.exists(FONT_PATH): os.remove(FONT_PATH)
-        return
-    cache_file = f"{FONT_CACHE}/{font_name}.ttf"
-    if os.path.exists(cache_file):
-        print(f"Pakai font dari cache: {font_name}")
+    else:
+        cache_file = f"{FONT_CACHE}/{font_name}.ttf"
+        if not os.path.exists(cache_file):
+            print(f"Download font {font_name}...")
+            os.makedirs(FONT_CACHE, exist_ok=True)
+            os.makedirs(TMP_DIR, exist_ok=True)
+            url = FONTS[font_name]
+            zip_file = f"{TMP_DIR}/{font_name}.zip"
+            run(f"curl -L {url} -o {zip_file}")
+            run(f"unzip -o {zip_file} '*.ttf' -d {TMP_DIR}")
+            ttf_files = [f for f in os.listdir(TMP_DIR) if f.endswith('.ttf')]
+            if ttf_files:
+                run(f"mv {TMP_DIR}/{ttf_files[0]} {cache_file}")
+            run(f"rm -rf {TMP_DIR}")
         run(f"cp {cache_file} {FONT_PATH}")
-        return
-    print(f"Download font {font_name}...")
-    os.makedirs(FONT_CACHE, exist_ok=True)
-    os.makedirs(TMP_DIR, exist_ok=True)
-    url = FONTS[font_name]
-    zip_file = f"{TMP_DIR}/{font_name}.zip"
-    run(f"curl -L {url} -o {zip_file}")
-    run(f"unzip -o {zip_file} '*.ttf' -d {TMP_DIR}")
-    ttf_files = [f for f in os.listdir(TMP_DIR) if f.endswith('.ttf')]
-    if ttf_files:
-        run(f"mv {TMP_DIR}/{ttf_files[0]} {cache_file}")
-        run(f"cp {cache_file} {FONT_PATH}")
-    run(f"rm -rf {TMP_DIR}")
+
+    print("Restart Termux biar font aktif...")
+    run("sleep 1 && pkill -f com.termux")
 
 def setup_keyboard():
     print("Setting up keyboard...")
@@ -186,8 +186,6 @@ def apply_theme(num):
     apply_prompt_fish(theme["colors"])
     setup_keyboard()
     with open(TERMUX_PROPS, "a") as f: f.write("\nuse-black-ui = false\nallow-external-apps = true\n")
-    print("\nSelesai! Force close Termux dari recent apps lalu buka lagi")
-    print("Tombol 'tema' sekarang langsung menjalankan script tema.")
 
 def get_input(prompt):
     try: return input(prompt).strip()
