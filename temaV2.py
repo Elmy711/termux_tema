@@ -23,7 +23,7 @@ def hex_to_rgb(h):
 THEMES = {
     1: {"name": "Default Termux", "colors": {"background": "#000","foreground": "#ffffff","color0": "#000","color1": "#ff0000","color2": "#00ff00","color3": "#ffff00","color4": "#0000ff","color5": "#ff00ff","color6": "#00ffff","color7": "#ffffff","color8": "#444","color9": "#ff0000","color10": "#00ff00","color11": "#ffff00","color12": "#0000ff","color13": "#ff00ff","color14": "#00ffff","color15": "#ffffff"}, "font": "default"},
     2: {"name": "Termius Nord", "colors": {"background":"#2E3440","foreground":"#D8DEE9","color0":"#3B4252","color1":"#BF616A","color2":"#A3BE8C","color3":"#EBCB8B","color4":"#81A1C1","color5":"#B48EAD","color6":"#88C0D0","color7":"#E5E9F0","color8":"#4C566A","color9":"#BF616A","color10":"#A3BE8C","color11":"#EBCB8B","color12":"#81A1C1","color13":"#B48EAD","color14":"#8FBCBB","color15":"#ECEFF4"}, "font": "JetBrainsMono"},
-    3: {"name": "Dracula Pink", "colors": {"background":"#282A36","foreground":"#F8F8F2","color0":"#000","color1":"#FF79C6","color2":"#50FA7B","color3":"#F1FA8C","color4":"#BD93F9","color5":"#FF79C6","color6":"#8BE9FD","color7":"#BFBF","color8":"#4D4D4D","color9":"#FF92DF","color10":"#69FF94","color11":"#FFFFA5","color12":"#D6ACFF","color13":"#FF92DF","color14":"#A4FFFF","color15":"#FFFFFF"}, "font": "FantasqueSansMono"},
+    3: {"name": "Dracula Pink", "colors": {"background":"#282A36","foreground":"#F8F8F2","color0":"#000","color1":"#FF79C6","color2":"#50FA7B","color3":"#F1FA8C","color4":"#BD93F9","color5":"#FF79C6","color6":"#8BE9FD","color7":"#BFBF","color8":"#4D4D4D","color9":"#FF92DF","color10":"#69FF94","color11":"#FFFFA5","color12":"#D6ACFF","color13":"#FF92DF","color14":"#A4FFFF","color15":"#FFFFFF"}, "font": "VictorMono"}, # GANTI DI SINI
     4: {"name": "Cyberpunk Neon", "colors": {"background":"#0a0a0f","foreground":"#ff00ff","color0":"#0a0a0f","color1":"#ff0066","color2":"#00ffcc","color3":"#ffff00","color4":"#00aaff","color5":"#ff00ff","color6":"#00ff00","color7":"#ffffff","color8":"#222233","color9":"#ff0066","color10":"#00ffcc","color11":"#ffff00","color12":"#00aaff","color13":"#ff00ff","color14":"#00ff00","color15":"#ffffff"}, "font": "CascadiaCode"},
     5: {"name": "Gruvbox Dark", "colors": {"background":"#282828","foreground":"#EBDBB2","color0":"#282828","color1":"#CC241D","color2":"#98971A","color3":"#D79921","color4":"#458588","color5":"#B16286","color6":"#689D6A","color7":"#A89984","color8":"#928374","color9":"#FB4934","color10":"#B8BB26","color11":"#FABD2F","color12":"#83A598","color13":"#D3869B","color14":"#8EC07C","color15":"#FDF4C1"}, "font": "VictorMono"},
     6: {"name": "Tokyo Night Storm","colors": {"background":"#24283b","foreground":"#c0caf5","color0":"#1D202F","color1":"#f7768e","color2":"#9ece6a","color3":"#e0af68","color4":"#7aa2f7","color5":"#bb9af7","color6":"#7dcfff","color7":"#a9b1d6","color8":"#414868","color9":"#f7768e","color10":"#9ece6a","color11":"#e0af68","color12":"#7aa2f7","color13":"#bb9af7","color14":"#7dcfff","color15":"#c0caf5"}, "font": "SourceCodePro"},
@@ -61,7 +61,6 @@ def generate_fish_prompt(colors):
         colors = {"background": "#000","foreground": "#ffffff","color1": "#ff0000","color2": "#00ff00","color3": "#ffff00","color4": "#0000ff","color5": "#ff00ff","color6": "#00ffff"}
     c1 = colors.get('color1'); c2 = colors.get('color2'); c3 = colors.get('color3')
     c4 = colors.get('color4'); c5 = colors.get('color5'); c6 = colors.get('color6')
-
     prompt = f'''
 # BEGIN PROMPT CUSTOM ELMY0711
 function fish_prompt
@@ -101,9 +100,7 @@ def preview_theme(num):
     print(f" PREVIEW: {theme['name']}")
     print(f" Font: {theme['font']}")
     print(f"{'='*40}")
-    if not theme["colors"]:
-        print(" Ini tema default Termux")
-        return
+    if not theme["colors"]: print(" Ini tema default Termux"); return
     c = theme["colors"]
     r1,g1,b1 = hex_to_rgb(c['color1']); r2,g2,b2 = hex_to_rgb(c['color2']); r3,g3,b3 = hex_to_rgb(c['color3'])
     r4,g4,b4 = hex_to_rgb(c['color4']); r5,g5,b5 = hex_to_rgb(c['color5']); r6,g6,b6 = hex_to_rgb(c['color6'])
@@ -127,11 +124,9 @@ def download_font(font_name):
             run(f"curl -L {url} -o {zip_file}")
             run(f"unzip -o {zip_file} '*.ttf' -d {TMP_DIR}")
             ttf_files = [f for f in os.listdir(TMP_DIR) if f.endswith('.ttf')]
-            if ttf_files:
-                run(f"mv {TMP_DIR}/{ttf_files[0]} {cache_file}")
+            if ttf_files: run(f"mv {TMP_DIR}/{ttf_files[0]} {cache_file}")
             run(f"rm -rf {TMP_DIR}")
         run(f"cp {cache_file} {FONT_PATH}")
-
     print("Restart Termux biar font aktif...")
     run("sleep 1 && pkill -f com.termux")
 
@@ -140,8 +135,7 @@ def setup_keyboard():
     os.makedirs(f"{HOME}/.termux", exist_ok=True)
     script_path = f"{HOME}/termux_tema/temaV2.py"
     config = f'''extra-keys = [["bash ","python3 ","nano ","go run ","UP","END","PGUP","node "],["python3 {script_path}\\n","CTRL","BKSP","LEFT","DOWN","RIGHT","git clone ","curl -i "],["ls","cd ","clear","ENTER","ping ","git pull","rm -rf","exit"]]'''
-    with open(TERMUX_PROPS, "w") as f:
-        f.write(config)
+    with open(TERMUX_PROPS, "w") as f: f.write(config)
 
 def strip_function_block(lines, func_name):
     result = []; i = 0; n = len(lines)
@@ -196,15 +190,12 @@ def main():
     run("pkg install curl unzip fish -y")
     run("chsh -s fish 2>/dev/null")
     os.makedirs(FONT_CACHE, exist_ok=True)
-
     while True:
         print("\n===💜 ELMY0711 TEMA TERMUX V2 💖===")
         for k, v in THEMES.items(): print(f"{k}. {v['name']:<20} - {v['font']}")
-
         pilih_input = get_input("\nPilih [1-11] q untuk keluar: ")
         if pilih_input.lower() == 'q': print("Keluar"); sys.exit(0)
         if not pilih_input.isdigit(): print("Input harus angka 1-11 atau q"); continue
-
         pilih = int(pilih_input)
         if pilih in THEMES:
             preview_theme(pilih)
