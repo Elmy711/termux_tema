@@ -31,7 +31,7 @@ THEMES = {
 FONTS = {
     "JetBrainsMono": "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.zip",
     "FantasqueSansMono": "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/FantasqueSansMono.zip",
-    "FiraCode": "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/FiraCode.zip",
+    "VictorMono": "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/FiraCode.zip",
     "CascadiaCode": "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/CascadiaCode.zip",
     "VictorMono": "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/VictorMono.zip",
     "SourceCodePro": "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/SourceCodePro.zip",
