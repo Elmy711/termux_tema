@@ -27,27 +27,27 @@ THEMES = {
         "color10": "#00ff00","color11": "#ffff00","color12": "#0000ff","color13": "#ff00ff","color14": "#00ffff","color15": "#ffffff"
     }, "font": "default"},
     2: {"name": "Termius Nord", "colors": {"background":"#2E3440","foreground":"#D8DEE9","color0":"#3B4252","color1":"#BF616A","color2":"#A3BE8C","color3":"#EBCB8B","color4":"#81A1C1","color5":"#B48EAD","color6":"#88C0D0","color7":"#E5E9F0","color8":"#4C566A","color9":"#BF616A","color10":"#A3BE8C","color11":"#EBCB8B","color12":"#81A1C1","color13":"#B48EAD","color14":"#8FBCBB","color15":"#ECEFF4"}, "font": "JetBrainsMono"},
-    3: {"name": "Dracula Pink", "colors": {"background":"#282A36","foreground":"#F8F8F2","color0":"#000","color1":"#FF79C6","color2":"#50FA7B","color3":"#F1FA8C","color4":"#BD93F9","color5":"#FF79C6","color6":"#8BE9FD","color7":"#BFBF","color8":"#4D4D4D","color9":"#FF92DF","color10":"#69FF94","color11":"#FFFFA5","color12":"#D6ACFF","color13":"#FF92DF","color14":"#A4FFFF","color15":"#FFFFFF"}, "font": "JetBrainsMono"},
-    4: {"name": "Cyberpunk Neon", "colors": {"background":"#0a0a0f","foreground":"#ff00ff","color0":"#0a0a0f","color1":"#ff0066","color2":"#00ffcc","color3":"#ffff00","color4":"#00aaff","color5":"#ff00ff","color6":"#00ff00","color7":"#ffffff","color8":"#222233","color9":"#ff0066","color10":"#00ffcc","color11":"#ffff00","color12":"#00aaff","color13":"#ff00ff","color14":"#00ff00","color15":"#ffffff"}, "font": "FiraCode"},
+    3: {"name": "Dracula Pink", "colors": {"background":"#282A36","foreground":"#F8F8F2","color0":"#000","color1":"#FF79C6","color2":"#50FA7B","color3":"#F1FA8C","color4":"#BD93F9","color5":"#FF79C6","color6":"#8BE9FD","color7":"#BFBF","color8":"#4D4D4D","color9":"#FF92DF","color10":"#69FF94","color11":"#FFFFA5","color12":"#D6ACFF","color13":"#FF92DF","color14":"#A4FFFF","color15":"#FFFFFF"}, "font": "FiraCode"},
+    4: {"name": "Cyberpunk Neon", "colors": {"background":"#0a0a0f","foreground":"#ff00ff","color0":"#0a0a0f","color1":"#ff0066","color2":"#00ffcc","color3":"#ffff00","color4":"#00aaff","color5":"#ff00ff","color6":"#00ff00","color7":"#ffffff","color8":"#222233","color9":"#ff0066","color10":"#00ffcc","color11":"#ffff00","color12":"#00aaff","color13":"#ff00ff","color14":"#00ff00","color15":"#ffffff"}, "font": "CascadiaCode"},
     5: {"name": "Gruvbox Dark", "colors": {"background":"#282828","foreground":"#EBDBB2","color0":"#282828","color1":"#CC241D","color2":"#98971A","color3":"#D79921","color4":"#458588","color5":"#B16286","color6":"#689D6A","color7":"#A89984","color8":"#928374","color9":"#FB4934","color10":"#B8BB26","color11":"#FABD2F","color12":"#83A598","color13":"#D3869B","color14":"#8EC07C","color15":"#FDF4C1"}, "font": "VictorMono"},
     6: {"name": "Tokyo Night Storm","colors": {"background":"#24283b","foreground":"#c0caf5","color0":"#1D202F","color1":"#f7768e","color2":"#9ece6a","color3":"#e0af68","color4":"#7aa2f7","color5":"#bb9af7","color6":"#7dcfff","color7":"#a9b1d6","color8":"#414868","color9":"#f7768e","color10":"#9ece6a","color11":"#e0af68","color12":"#7aa2f7","color13":"#bb9af7","color14":"#7dcfff","color15":"#c0caf5"}, "font": "SourceCodePro"},
     7: {"name": "Everforest Ocean", "colors": {"background":"#2d353b","foreground":"#d3c6aa","color0":"#2d353b","color1":"#e67e80","color2":"#a7c080","color3":"#dbbc7f","color4":"#7fbbb3","color5":"#d699b6","color6":"#83c092","color7":"#d3c6aa","color8":"#475258","color9":"#e67e80","color10":"#a7c080","color11":"#dbbc7f","color12":"#7fbbb3","color13":"#d699b6","color14":"#83c092","color15":"#ffffff"}, "font": "UbuntuMono"},
-
-    # TAMBAHAN 4 TEMA BARU
-    8: {"name": "Cyberpunk", "colors": {"background":"#090014","foreground":"#00ffff","color0":"#120024","color1":"#ff0055","color2":"#00ff9c","color3":"#ffe600","color4":"#00aaff","color5":"#ff00ff","color6":"#00ffff","color7":"#d8d8d8","color8":"#3b0057","color9":"#ff3366","color10":"#33ffbb","color11":"#ffff33","color12":"#33bbff","color13":"#ff33ff","color14":"#33ffff","color15":"#ffffff"}, "font": "JetBrainsMono"},
+    8: {"name": "Cyberpunk", "colors": {"background":"#090014","foreground":"#00ffff","color0":"#120024","color1":"#ff0055","color2":"#00ff9c","color3":"#ffe600","color4":"#00aaff","color5":"#ff00ff","color6":"#00ffff","color7":"#d8d8d8","color8":"#3b0057","color9":"#ff3366","color10":"#33ffbb","color11":"#ffff33","color12":"#33bbff","color13":"#ff33ff","color14":"#33ffff","color15":"#ffffff"}, "font": "Hack"},
     9: {"name": "Solarized", "colors": {"background":"#002b36","foreground":"#839496","color0":"#073642","color1":"#dc322f","color2":"#859900","color3":"#b58900","color4":"#268bd2","color5":"#d33682","color6":"#2aa198","color7":"#eee8d5","color8":"#002b36","color9":"#cb4b16","color10":"#586e75","color11":"#657b83","color12":"#839496","color13":"#6c71c4","color14":"#93a1a1","color15":"#fdf6e3"}, "font": "RobotoMono"},
-    10: {"name": "Everforest", "colors": {"background":"#2d353b","foreground":"#d3c6aa","color0":"#343f44","color1":"#e67e80","color2":"#a7c080","color3":"#dbbc7f","color4":"#7fbbb3","color5":"#d699b6","color6":"#83c092","color7":"#d3c6aa","color8":"#475258","color9":"#e67e80","color10":"#a7c080","color11":"#dbbc7f","color12":"#7fbbb3","color13":"#d699b6","color14":"#83c092","color15":"#e9e8d2"}, "font": "UbuntuMono"},
+    10: {"name": "Everforest", "colors": {"background":"#2d353b","foreground":"#d3c6aa","color0":"#343f44","color1":"#e67e80","color2":"#a7c080","color3":"#dbbc7f","color4":"#7fbbb3","color5":"#d699b6","color6":"#83c092","color7":"#d3c6aa","color8":"#475258","color9":"#e67e80","color10":"#a7c080","color11":"#dbbc7f","color12":"#7fbbb3","color13":"#d699b6","color14":"#83c092","color15":"#e9e8d2"}, "font": "Iosevka"},
     11: {"name": "Monokai", "colors": {"background":"#272822","foreground":"#f8f8f2","color0":"#272822","color1":"#f92672","color2":"#a6e22e","color3":"#f4bf75","color4":"#66d9ef","color5":"#ae81ff","color6":"#a1efe4","color7":"#f8f8f2","color8":"#75715e","color9":"#f92672","color10":"#a6e22e","color11":"#f4bf75","color12":"#66d9ef","color13":"#ae81ff","color14":"#a1efe4","color15":"#f9f8f5"}, "font": "Mononoki"}
 }
 
 FONTS = {
     "JetBrainsMono": "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.zip",
-    "ZedMono": "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/ZedMono.zip",
     "FiraCode": "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/FiraCode.zip",
+    "CascadiaCode": "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/CascadiaCode.zip",
     "VictorMono": "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/VictorMono.zip",
     "SourceCodePro": "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/SourceCodePro.zip",
     "UbuntuMono": "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/UbuntuMono.zip",
+    "Hack": "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Hack.zip",
     "RobotoMono": "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/RobotoMono.zip",
+    "Iosevka": "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Iosevka.zip",
     "Mononoki": "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Mononoki.zip"
 }
 
@@ -61,7 +61,7 @@ alias reload='source ~/.config/fish/config.fish'
 
 def generate_fish_prompt(colors):
     if not colors:
-        colors = {"background": "#000000","foreground": "#ffffff","color1": "#ff0000","color2": "#00ff00","color3": "#ffff00","color4": "#0000ff","color5": "#ff00ff","color6": "#00ffff"}
+        colors = {"background": "#000","foreground": "#ffffff","color1": "#ff0000","color2": "#00ff00","color3": "#ffff00","color4": "#0000ff","color5": "#ff00ff","color6": "#00ffff"}
     c1 = colors.get('color1'); c2 = colors.get('color2'); c3 = colors.get('color3')
     c4 = colors.get('color4'); c5 = colors.get('color5'); c6 = colors.get('color6')
 
