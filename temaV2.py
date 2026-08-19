@@ -5,6 +5,7 @@ FONT_DIR = TERMUX_DIR
 FONT_TTF = os.path.join(TERMUX_DIR, "font.ttf")
 PROP_FILE = os.path.join(TERMUX_DIR, "termux.properties")
 STARSHIP_CONFIG = os.path.expanduser("~/.config/starship.toml")
+BASHRC = os.path.expanduser("~/.bashrc")
 
 THEMES = {
     1: {"name": "Monokai Pro", "font": "FiraCode", "colors": {"background": "#2d2a2e", "foreground": "#fcfcfa", "color0": "#2d2a2e", "color1": "#ff6188", "color2": "#a9dc76", "color3": "#ffd866", "color4": "#78dce8", "color5": "#ab9df2", "color6": "#73d0ff", "color7": "#fcfcfa", "color8": "#727072", "color9": "#ff6188", "color10": "#a9dc76", "color11": "#ffd866", "color12": "#78dce8", "color13": "#ab9df2", "color14": "#73d0ff", "color15": "#ffffff"}},
@@ -21,8 +22,8 @@ THEMES = {
 FONT_URLS = {"FiraCode": "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/FiraCode.tar.xz", "JetBrainsMono": "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/JetBrainsMono.tar.xz", "CascadiaCode": "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/CascadiaCode.tar.xz", "Hack": "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/Hack.tar.xz", "VictorMono": "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/VictorMono.tar.xz"}
 
 def download_all_fonts():
-    fonts = list(set([v["font"] for v in THEMES.values()])) # ambil font unik doang
-    print(f"[+] Download 5 font sekaligus: {', '.join(fonts)}")
+    fonts = list(set([v["font"] for v in THEMES.values()]))
+    print(f"[+] Download 5 font: {', '.join(fonts)}")
     for f in fonts:
         if os.path.exists(f"{FONT_DIR}/{f}.done"):
             print(f"[=] {f} sudah ada, skip")
@@ -32,37 +33,49 @@ def download_all_fonts():
         urllib.request.urlretrieve(url, file)
         subprocess.run(["tar","-xf",file,"-C",FONT_DIR])
         subprocess.run(["rm", file])
-        open(f"{FONT_DIR}/{f}.done", "w").close() # penanda udah download
+        open(f"{FONT_DIR}/{f}.done", "w").close()
     print("[+] Semua font selesai")
 
 def setup_all():
+    print("[+] Setting Alias 'tema'...")
+    alias_cmd = f"alias tema='python3 {os.path.expanduser('~')}/termux_tema/install_all_v3.py'\n"
+    with open(BASHRC, "a") as f:
+        if "alias tema=" not in open(BASHRC).read():
+            f.write(alias_cmd)
+
     print("[+] Setting Starship ELMY...")
     os.makedirs(os.path.dirname(STARSHIP_CONFIG), exist_ok=True)
     with open(STARSHIP_CONFIG, "w") as f:
         f.write('format = "$directory$git_branch$git_status$cmd_duration$line_break$character"\n[character]\nsuccess_symbol = "[╰─>](bold purple)"\n[directory]\nformat = "[╭─💖ELMY0711💜─[$path]]($style)"\nstyle = "bold cyan"\n')
 
-    print("[+] Setting Keyboard + Transparan...")
+    print("[+] Setting Keyboard V3.1 - ADA TOMBOL TEMA...")
+    script_path = os.path.expanduser("~")
+    config = f'''extra-keys = [["bash ","python3 ","nano ","TEMA ","UP","END","PGUP","node "],["TEMA\\n","CTRL","BKSP","LEFT","DOWN","RIGHT","git clone ","curl -i "],["ls","cd ","clear","ENTER","ping ","git pull","rm -rf","exit"]]
+background_transparency = 85
+use_black_cursor = false
+'''
     with open(PROP_FILE, "w") as f:
-        f.write('extra-keys = [["ESC","|","/","HOME","UP","END","PGUP","DEL"],["TAB","CTRL","ALT","LEFT","DOWN","RIGHT","PGDN","BKSP"]]\nbackground_transparency = 90\n')
+        f.write(config)
 
 def apply_theme(t):
     theme = THEMES[t]
-    ttf = glob.glob(f"{FONT_DIR}/*.ttf")[0] # ambil ttf pertama
-    subprocess.run(["cp", ttf, FONT_TTF])
+    ttf_list = glob.glob(f"{FONT_DIR}/*.ttf")
+    if ttf_list:
+        subprocess.run(["cp", ttf_list[0], FONT_TTF])
     with open(f"{TERMUX_DIR}/colors.properties","w") as f: [f.write(f"{k} = {v}\n") for k,v in theme["colors"].items()]
     subprocess.run(["termux-reload-settings"])
     print(f"\n[SUKSES] {theme['name']} aktif!")
 
 def main():
-    print("="*45)
-    print(" INSTALLER SEMUA TEMA + FONT + SETTING ")
-    print("="*45)
+    print("="*50)
+    print(" INSTALLER V5.3 - TEMA + FONT + PROMPT + KEYBOARD + ALIAS ")
+    print("="*50)
     setup_all()
     download_all_fonts()
     print("\nPilih tema default:")
     [print(f"{k}. {v['name']}") for k,v in THEMES.items()]
     apply_theme(int(input("Pilih [1-10]: ")))
     print("\nSELESAI! Force close Termux lalu buka lagi")
-    print("Mau ganti tema tinggal edit colors.properties + font.ttf manual")
+    print("Cara ganti tema: Pencet tombol 'TEMA' di keyboard atau ketik 'tema'")
 
 if __name__=="__main__": main()
