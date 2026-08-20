@@ -104,16 +104,16 @@ def generate_fish_prompt(colors):
 # BEGIN PROMPT CUSTOM ELMY0711
 function fish_prompt
     set_color {c6}
-    echo -n (date "+%a %b %d %H:%M:%S")
+    echo -n (date " %d %b %H:%M:%S")
     echo ""
     set_color {c5}
     echo -n "╭─"
     set_color {c1}
-    echo -n "💖"
+    echo -n " 💖"
     set_color {c5}
     echo -n "ELMY0711"
     set_color {c1}
-    echo -n "💜"
+    echo -n "💜 "
     set_color {c5}
     echo -n " _["
     set_color {c3}
@@ -146,8 +146,8 @@ def preview_theme(num):
     r1,g1,b1 = hex_to_rgb(c['color1']); r2,g2,b2 = hex_to_rgb(c['color2']); r3,g3,b3 = hex_to_rgb(c['color3'])
     r4,g4,b4 = hex_to_rgb(c['color4']); r5,g5,b5 = hex_to_rgb(c['color5']); r6,g6,b6 = hex_to_rgb(c['color6'])
     rb,gb,bb = hex_to_rgb(c['background']); rf,gf,bf = hex_to_rgb(c['foreground'])
-    print(f" \033[38;2;{r1};{g1};{b1}m█ Merah\033[0m \033[38;2;{r2};{g2};{b2}m█ Hijau\033[0m \033[38;2;{r3};{g3};{b3}m██ Kuning\033[0m")
-    print(f" \033[38;2;{r4};{g4};{b4}m█ Biru\033[0m \033[38;2;{r5};{g5};{b5}m█ Magenta\033[0m \033[38;2;{r6};{g6};{b6}m██ Cyan\033[0m")
+    print(f" \033[38;2;{r1};{g1};{b1}m█ Merah\033[0m \033[38;2;{r2};{g2};{b2}m█ Hijau\033[0m \033[38;2;{r3};{g3};{b3}m█ Kuning\033[0m")
+    print(f" \033[38;2;{r4};{g4};{b4}m█ Biru\033[0m \033[38;2;{r5};{g5};{b5}m█ Magenta\033[0m \033[38;2;{r6};{g6};{b6}m█ Cyan\033[0m")
     print(f" \033[48;2;{rb};{gb};{bb}m \033[0m Background \033[38;2;{rf};{gf};{bf}m█ Foreground\033[0m")
     print(f"{'='*40}")
 
