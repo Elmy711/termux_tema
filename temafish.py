@@ -115,7 +115,7 @@ function fish_prompt
     set_color {c1}
     echo -n "💜"
     set_color {c5}
-    echo -n "─ "
+    echo -n " _["
     set_color {c3}
     echo -n (prompt_pwd)
     set_color {c5}
