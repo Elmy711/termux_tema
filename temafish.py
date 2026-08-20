@@ -12,7 +12,7 @@ FISH_CONFIG_PATH = f"{FISH_CONFIG_DIR}/config.fish"
 TERMUX_PROPS = f"{HOME}/.termux/termux.properties"
 
 # Tombol "tema" sekarang mengirim "tema" + ENTER (dengan \n)
-CONFIG_CONTENT = 'extra-keys = [["bash ","python3 ","go run ","nano ","UP","END","PGUP","DEL"],["tema","CTRL","BKSP","LEFT","DOWN","RIGHT","PGDN","node "],["ls","cd ","clear","ENTER","pkg install ","git pull","rm -rf ","exit"]]'
+CONFIG_CONTENT = 'extra-keys = [["bash ","python3 ","go run ","nano ","UP","END","PGUP","git clone "],["tema","CTRL","BKSP","LEFT","DOWN","RIGHT","curl -l ","node "],["ls","cd ","clear","ENTER","pkg install ","git pull","rm -rf ","exit"]]'
 
 def run(cmd):
     subprocess.run(cmd, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
