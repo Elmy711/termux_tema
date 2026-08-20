@@ -122,9 +122,9 @@ function fish_prompt
     echo -n "]"
     echo ""
     set_color {c5}
-    echo -n "╰───"
+    echo -n "╰─"
     set_color {c2}
-    echo -n " ╼"
+    echo -n "╼"
     set_color normal
 end
 function fish_right_prompt
@@ -135,10 +135,10 @@ end
 
 def preview_theme(num):
     theme = THEMES[num]
-    print(f"\n{'='*40}")
+    print(f"\n{'='*20}")
     print(f" PREVIEW: {theme['name']}")
     print(f" Font: {theme['font']}")
-    print(f"{'='*40}")
+    print(f"{'='*20}")
     if not theme["colors"]:
         print(" tema default Termux")
         return
