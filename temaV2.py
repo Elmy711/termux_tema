@@ -60,7 +60,7 @@ def setup_all():
 
     print("[+] Setting Keyboard V3.1 - ADA TOMBOL TEMA...")
     script_path = os.path.expanduser("~")
-    config = f'''extra-keys = [["bash ","python3 ","nano ","go run ","UP","END","PGUP","node "],["TEMA\\n","CTRL","BKSP","LEFT","DOWN","RIGHT","git clone ","curl -i "],["ls","cd ","clear","ENTER","ping ","git pull","rm -rf ","exit"]]
+    config = f'''extra-keys = [["bash ","python3 ","nano ","go run ","UP","END","PGUP","node "],["tema","CTRL","BKSP","LEFT","DOWN","RIGHT","git clone ","curl -i "],["ls","cd ","clear","ENTER","ping ","git pull","rm -rf ","exit"]]
 background_transparency = 85
 use_black_cursor = false
 '''
