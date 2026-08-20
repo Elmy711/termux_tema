@@ -124,7 +124,7 @@ function fish_prompt
     set_color {c5}
     echo -n "╰───"
     set_color {c2}
-    echo -n " ─"
+    echo -n " ╼"
     set_color normal
 end
 function fish_right_prompt
