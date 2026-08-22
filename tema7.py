@@ -113,20 +113,20 @@ end
 
 def preview_theme(num):
     theme = THEMES[num]
-    print(f"\n{'='*40}")
+    print(f"\n{'='*20}")
     print(f" PREVIEW: {theme['name']}")
     print(f" Font: {theme['font']}")
-    print(f"{'='*40}")
+    print(f"{'='*20}")
     if not theme["colors"]:
-        print(" Ini tema default Termux")
+        print("tema default Termux")
         return
     c = theme["colors"]
     r1,g1,b1 = hex_to_rgb(c['color1']); r2,g2,b2 = hex_to_rgb(c['color2']); r3,g3,b3 = hex_to_rgb(c['color3'])
     r4,g4,b4 = hex_to_rgb(c['color4']); r5,g5,b5 = hex_to_rgb(c['color5']); r6,g6,b6 = hex_to_rgb(c['color6'])
     rb,gb,bb = hex_to_rgb(c['background']); rf,gf,bf = hex_to_rgb(c['foreground'])
-    print(f" \033[38;2;{r1};{g1};{b1}m██ Merah\033[0m \033[38;2;{r2};{g2};{b2}m██ Hijau\033[0m \033[38;2;{r3};{g3};{b3}m██ Kuning\033[0m")
-    print(f" \033[38;2;{r4};{g4};{b4}m██ Biru\033[0m \033[38;2;{r5};{g5};{b5}m██ Magenta\033[0m \033[38;2;{r6};{g6};{b6}m██ Cyan\033[0m")
-    print(f" \033[48;2;{rb};{gb};{bb}m \033[0m Background \033[38;2;{rf};{gf};{bf}m██ Foreground\033[0m")
+    print(f" \033[38;2;{r1};{g1};{b1}m█ Merah\033[0m \033[38;2;{r2};{g2};{b2}m█ Hijau\033[0m \033[38;2;{r3};{g3};{b3}m█ Kuning\033[0m")
+    print(f" \033[38;2;{r4};{g4};{b4}m█ Biru\033[0m \033[38;2;{r5};{g5};{b5}m█ Magenta\033[0m \033[38;2;{r6};{g6};{b6}m█ Cyan\033[0m")
+    print(f" \033[48;2;{rb};{gb};{bb}m \033[0m Background \033[38;2;{rf};{gf};{bf}m█ Foreground\033[0m")
     print(f"{'='*40}")
 
 def download_font(font_name):
@@ -154,7 +154,6 @@ def download_font(font_name):
 def setup_keyboard():
     print("Setting up keyboard...")
     os.makedirs(f"{HOME}/.termux", exist_ok=True)
-    # Tombol langsung memanggil script (tanpa alias) agar pasti berfungsi
     script_path = f"{HOME}/termux_tema/tema7.py"
     config = f'''extra-keys = [["bash ","python3 ","nano ","go run ","UP","END","PGUP","node "],["python3 {script_path}\\n","CTRL","BKSP","LEFT","DOWN","RIGHT","git clone ","curl -i "],["ls","cd ","clear","ENTER","ping ","git pull","rm -rf","exit"]]'''
     with open(TERMUX_PROPS, "w") as f:
@@ -220,8 +219,8 @@ def apply_theme(num):
     download_font(theme["font"])
     apply_prompt_fish(theme["colors"])
     setup_keyboard()
-    print("\nSelesai! Force close Termux dari recent apps lalu buka lagi")
-    print("Tombol 'tema' (baris kedua) sekarang langsung menjalankan script tema.")
+    print("\nSelesai! Exit dan open lagi")
+    print("Klik tombol 'tema' untuk merubah tema.")
 
 def get_input(prompt):
     try:
@@ -237,10 +236,10 @@ def main():
     os.makedirs(FONT_CACHE, exist_ok=True)
 
     while True:
-        print("\n===💜  ELMY0711 TEMA TERMUX  💖===")
+        print("\n=== 💜  ELMY0711 TEMA TERMUX  💖 ===")
         for k, v in THEMES.items(): print(f"{k}. {v['name']:<20} - {v['font']}")
 
-        pilih_input = get_input("\nPilih [1-7]  q untuk keluar: ")
+        pilih_input = get_input("\nPilih 1-7 atau q untuk keluar: ")
         if pilih_input.lower() == 'q':
             print("Keluar")
             sys.exit(0)
