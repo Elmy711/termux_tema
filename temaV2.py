@@ -58,7 +58,7 @@ def setup_all():
     with open(STARSHIP_CONFIG, "w") as f:
         f.write('format = "$directory$git_branch$git_status$cmd_duration$line_break$character"\n[character]\nsuccess_symbol = "[╰─>](bold purple)"\n[directory]\nformat = "[╭─💖ELMY0711💜─[$path]]($style)"\nstyle = "bold cyan"\n')
 
-    print("[+] Setting Keyboard V3.1 - ADA TOMBOL TEMA...")
+    print("[+] Setting Keyboard V2 - WITH TOMBOL TEMA...")
     script_path = os.path.expanduser("~")
     config = f'''extra-keys = [["bash ","python3 ","nano ","go run ","UP","END","PGUP","node "],["tema","CTRL","BKSP","LEFT","DOWN","RIGHT","git clone ","curl -i "],["ls","cd ","clear","ENTER","ping ","git pull","rm -rf ","exit"]]
 background_transparency = 85
@@ -77,15 +77,15 @@ def apply_theme(t):
     print(f"\n[SUKSES] {theme['name']} aktif!")
 
 def main():
-    print("="*50)
-    print(" INSTALLER V5.3 - TEMA + FONT + PROMPT + KEYBOARD + ALIAS ")
-    print("="*50)
+    print("="*40)
+    print(" INSTALLER V2 ")
+    print("="*40)
     setup_all()
     download_all_fonts()
     print("\nPilih tema default:")
     [print(f"{k}. {v['name']}") for k,v in THEMES.items()]
     apply_theme(int(input("Pilih [1-10]: ")))
     print("\nSELESAI! Force close Termux lalu buka lagi")
-    print("Cara ganti tema: Pencet tombol 'TEMA' di keyboard atau ketik 'tema'")
+    print("Ganti tema: Kliktombol 'TEMA' atau ketik 'tema'")
 
 if __name__=="__main__": main()
