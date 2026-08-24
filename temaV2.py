@@ -86,6 +86,6 @@ def main():
     [print(f"{k}. {v['name']}") for k,v in THEMES.items()]
     apply_theme(int(input("Pilih [1-10]: ")))
     print("\nSELESAI! Force close Termux lalu buka lagi")
-    print("Ganti tema: Kliktombol 'TEMA' atau ketik 'tema'")
+    print("Ganti tema: Klik tombol 'TEMA' atau ketik 'tema'")
 
 if __name__=="__main__": main()
