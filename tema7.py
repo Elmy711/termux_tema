@@ -48,7 +48,7 @@ alias reload 'source ~/.config/fish/config.fish'
 '''
 
 def generate_fish_prompt(colors):
-    date_color = "#666666" 
+    date_color = "#555555" 
     if colors:
         c1 = colors.get('color1', '#ff0000')
         c2 = colors.get('color2', '#00ff00')
@@ -63,7 +63,7 @@ def generate_fish_prompt(colors):
 # BEGIN PROMPT CUSTOM ELMY0711
 function fish_prompt
     set_color {date_color}
-    echo -n (date "+%b %d %H:%M:%S") # INI TANGGAL ABU2
+    echo -n (date "+%b %d %H:%M:%S")
     echo ""
     set_color {c5}
     echo -n "╭─"
@@ -94,10 +94,10 @@ end
 
 def preview_theme(num):
     theme = THEMES[num]
-    print(f"\n{'='*20}")
+    print(f"\n{'='*40}")
     print(f" PREVIEW: {theme['name']}")
     print(f" Font: {theme['font']}")
-    print(f"{'='*20}")
+    print(f"{'='*40}")
     if not theme["colors"]:
         print("tema default Termux")
         return
@@ -108,7 +108,7 @@ def preview_theme(num):
     print(f" \033[38;2;{r1};{g1};{b1}m█ Merah\033[0m \033[38;2;{r2};{g2};{b2}m█ Hijau\033[0m \033[38;2;{r3};{g3};{b3}m█ Kuning\033[0m")
     print(f" \033[38;2;{r4};{g4};{b4}m█ Biru\033[0m \033[38;2;{r5};{g5};{b5}m█ Magenta\033[0m \033[38;2;{r6};{g6};{b6}m█ Cyan\033[0m")
     print(f" \033[48;2;{rb};{gb};{bb}m \033[0m Background \033[38;2;{rf};{gf};{bf}m█ Foreground\033[0m")
-    print(f"{'='*20}")
+    print(f"{'='*40}")
 
 def download_font(font_name):
     if font_name == "default":
@@ -203,7 +203,7 @@ def apply_theme(num):
     setup_keyboard()
     run("termux-reload-settings")
     print("\nSelesai! Exit dan open lagi")
-    print("Klik tombol 'python3 ~/termux_tema/tema7.py'")
+    print("Klik tombol 'python3 ~/termux_tema/tema7.py untuk ubah tema'")
 
 def get_input(prompt):
     try:
