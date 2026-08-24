@@ -22,67 +22,49 @@ def hex_to_rgb(h):
 
 THEMES = {
     1: {"name": "Default Termux", "colors": {"background": "#000000","foreground": "#ffffff","color1": "#ff0000","color2": "#00ff00","color3": "#ffff00","color4": "#0000ff","color5": "#ff00ff","color6": "#00ffff","color7": "#ffffff","color8": "#444444","color9": "#ff0000","color10": "#00ff00","color11": "#ffff00","color12": "#0000ff","color13": "#ff00ff","color14": "#00ffff","color15": "#ffffff" }, "font": "default"},
-    2: {"name": "Termius Nord", "colors": {"background":"#2E3440","foreground":"#D8DEE9","color0":"#3B4252","color1":"#BF616A","color2":"#A3BE8C","color3":"#EBCB8B","color4":"#81A1C1","color5":"#B48EAD","color6":"#88C0D0","color7":"#E5E9F0","color8":"#4C566A","color9":"#BF616A","color10":"#A3BE8C","color11":"#EBCB8B","color12":"#81A1C1","color13":"#B48EAD","color14":"#8FBCBB","color15":"#ECEFF4"}, "font": "JetBrainsMono"}, 
+    2: {"name": "Termius Nord", "colors": {"background":"#2E3440","foreground":"#D8DEE9","color0":"#3B4252","color1":"#BF616A","color2":"#A3BE8C","color3":"#EBCB8B","color4":"#81A1C1","color5":"#B48EAD","color6":"#88C0D0","color7":"#E5E9F0","color8":"#4C566A","color9":"#BF616A","color10":"#A3BE8C","color11":"#EBCB8B","color12":"#81A1C1","color13":"#B48EAD","color14":"#8FBCBB","color15":"#ECEFF4"}, "font": "JetBrainsMono"},
     3: {"name": "Dracula Pink", "colors": {"background":"#282A36","foreground":"#F8F8F2","color0":"#000","color1":"#FF79C6","color2":"#50FA7B","color3":"#F1FA8C","color4":"#BD93F9","color5":"#FF79C6","color6":"#8BE9FD","color7":"#BFBF","color8":"#4D4D4D","color9":"#FF92DF","color10":"#69FF94","color11":"#FFFFA5","color12":"#D6ACFF","color13":"#FF92DF","color14":"#A4FFFF","color15":"#FFFFFF"}, "font": "ZedMono"},
-    4: {"name": "Cyberpunk Neon", "colors": {"background":"#0a0a0f","foreground":"#ff00ff","color0":"#0a0a0f","color1":"#ff0066","color2":"#00ffcc","color3":"#ffff00","color4":"#00aaff","color5":"#ff00ff","color6":"#00ff00","color7":"#ffffff","color8":"#222233","color9":"#ff0066","color10":"#00ffcc","color11":"#ffff00","color12":"#00aaff","color13":"#ff00ff","color14":"#00ff00","color15":"#ffffff"}, "font": "FiraCode"},  
+    4: {"name": "Cyberpunk Neon", "colors": {"background":"#0a0a0f","foreground":"#ff00ff","color0":"#0a0a0f","color1":"#ff0066","color2":"#00ffcc","color3":"#ffff00","color4":"#00aaff","color5":"#ff00ff","color6":"#00ff00","color7":"#ffffff","color8":"#222233","color9":"#ff0066","color10":"#00ffcc","color11":"#ffff00","color12":"#00aaff","color13":"#ff00ff","color14":"#00ff00","color15":"#ffffff"}, "font": "FiraCode"},
     5: {"name": "Gruvbox Dark", "colors": {"background":"#282828","foreground":"#EBDBB2","color0":"#282828","color1":"#CC241D","color2":"#98971A","color3":"#D79921","color4":"#458588","color5":"#B16286","color6":"#689D6A","color7":"#A89984","color8":"#928374","color9":"#FB4934","color10":"#B8BB26","color11":"#FABD2F","color12":"#83A598","color13":"#D3869B","color14":"#8EC07C","color15":"#FDF4C1"}, "font": "VictorMono"},
-    6: {"name": "Tokyo Night Storm","colors": {"background":"#24283b","foreground":"#c0caf5","color0":"#1D202F","color1":"#f7768e","color2":"#9ece6a","color3":"#e0af68","color4":"#7aa2f7","color5":"#bb9af7","color6":"#7dcfff","color7":"#a9b1d6","color8":"#414868","color9":"#f7768e","color10":"#9ece6a","color11":"#e0af68","color12":"#7aa2f7","color13":"#bb9af7","color14":"#7dcfff","color15":"#c0caf5"}, "font": "SourceCodePro"},  
-    7: {"name": "Everforest Ocean", "colors": {"background": "#000000","foreground": "#ffffff","color1": "#ff0000","color2": "#00ff00","color3": "#ffff00","color4": "#0000ff","color5": "#ff00ff","color6": "#00ffff","color7": "#ffffff","color8": "#444444","color9": "#ff0000","color10": "#00ff00","color11": "#ffff00","color12": "#0000ff","color13": "#ff00ff","color14": "#00ffff","color15": "#ffffff" }, "font": "UbuntuMono"}, 
+    6: {"name": "Tokyo Night Storm","colors": {"background":"#24283b","foreground":"#c0caf5","color0":"#1D202F","color1":"#f7768e","color2":"#9ece6a","color3":"#e0af68","color4":"#7aa2f7","color5":"#bb9af7","color6":"#7dcfff","color7":"#a9b1d6","color8":"#414868","color9":"#f7768e","color10":"#9ece6a","color11":"#e0af68","color12":"#7aa2f7","color13":"#bb9af7","color14":"#7dcfff","color15":"#c0caf5"}, "font": "SourceCodePro"},
+    7: {"name": "Everforest Ocean", "colors": {"background": "#2d353b","foreground": "#d3c6aa","color1": "#e67e80","color2": "#a7c080","color3": "#dbbc7f","color4": "#7fbbb3","color5": "#d699b6","color6": "#83c092","color7": "#d3c6aa","color8": "#475258","color9": "#e67e80","color10": "#a7c080","color11": "#dbbc7f","color12": "#7fbbb3","color13": "#d699b6","color14": "#83c092","color15": "#d3c6aa" }, "font": "UbuntuMono"},
 }
 
 FONTS = {
-    "JetBrainsMono": "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.zip", 
+    "JetBrainsMono": "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.zip",
     "ZedMono": "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/ZedMono.zip",
-    "FiraCode": "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/FiraCode.zip",  
+    "FiraCode": "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/FiraCode.zip",
     "VictorMono": "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/VictorMono.zip",
     "SourceCodePro": "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/SourceCodePro.zip",
-    "UbuntuMono": "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/UbuntuMono.zip"  
+    "UbuntuMono": "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/UbuntuMono.zip"
 }
 
 ALIAS_FISH = f'''
 # BEGIN ALIAS TEMA TERMUX
-alias tema='python {HOME}/termux_tema/tema7.py'
-alias t='python {HOME}/termux_tema/tema7.py'
-alias reload='source ~/.config/fish/config.fish'
+alias tema 'python {HOME}/termux_tema/tema7.py'
+alias t 'python {HOME}/termux_tema/tema7.py'
+alias reload 'source ~/.config/fish/config.fish'
 # END ALIAS TEMA TERMUX
 '''
 
 def generate_fish_prompt(colors):
-    if not colors:
-        colors = {
-            "background": "#000000",
-            "foreground": "#ffffff",
-            "color0": "#000000",
-            "color1": "#ff0000",
-            "color2": "#00ff00",
-            "color3": "#ffff00",
-            "color4": "#0000ff",
-            "color5": "#ff00ff",
-            "color6": "#00ffff",
-            "color7": "#ffffff",
-            "color8": "#444444",
-            "color9": "#ff0000",
-            "color10": "#00ff00",
-            "color11": "#ffff00",
-            "color12": "#0000ff",
-            "color13": "#ff00ff",
-            "color14": "#00ffff",
-            "color15": "#ffffff"
-        }
-    c1 = colors.get('color1', '#ff0000')
-    c2 = colors.get('color2', '#00ff00')
-    c3 = colors.get('color3', '#ffff00')
-    c4 = colors.get('color4', '#0000ff')
-    c5 = colors.get('color5', '#ff00ff')
-    c6 = colors.get('color6', '#00ffff')
-    fg = colors.get('foreground', '#ffffff')
-    bg = colors.get('background', '#000000')
+    # DATE WARNA ABU2 DIMMED
+    date_color = "#888888" # Abu2
+    if colors:
+        c1 = colors.get('color1', '#ff0000')
+        c2 = colors.get('color2', '#00ff00')
+        c3 = colors.get('color3', '#ffff00')
+        c4 = colors.get('color4', '#0000ff')
+        c5 = colors.get('color5', '#ff00ff')
+        c6 = colors.get('color6', '#00ffff')
+    else:
+        c1,c2,c3,c4,c5,c6 = "#ff0000","#00ff00","#ffff00","#0000ff","#ff00ff","#00ffff"
 
     prompt = f'''
 # BEGIN PROMPT CUSTOM ELMY0711
 function fish_prompt
-    set_color {c6}
-    echo -n (date "+%b %d %H:%M:%S")
+    set_color {date_color}
+    echo -n (date "+%b %d %H:%M:%S") # INI TANGGAL ABU2
     echo ""
     set_color {c5}
     echo -n "╭─"
@@ -155,7 +137,8 @@ def setup_keyboard():
     print("Setting up keyboard...")
     os.makedirs(f"{HOME}/.termux", exist_ok=True)
     script_path = f"{HOME}/termux_tema/tema7.py"
-    config = f'''extra-keys = [["bash ","python3 ","nano ","go run ","UP","END","PGUP","node "],["python3 {script_path}\\n","CTRL","BKSP","LEFT","DOWN","RIGHT","git clone ","curl -i "],["ls","cd ","clear","ENTER","ping ","git pull","rm -rf","exit"]]'''
+    config = f'''extra-keys = [["bash ","python3 ","nano ","go run ","UP","END","PGUP","node "],["python3 {script_path}\\n","CTRL","BKSP","LEFT","DOWN","RIGHT","git clone ","curl -i "],["ls","cd ","clear","ENTER","ping ","git pull","rm -rf","exit"]]
+background_transparency = 85'''
     with open(TERMUX_PROPS, "w") as f:
         f.write(config)
 
@@ -166,7 +149,7 @@ def strip_function_block(lines, func_name):
     while i < n:
         if lines[i].strip() == f"function {func_name}":
             i += 1
-            while i < n and lines[i].strip() != "end":
+            while i < n and lines[i].strip()!= "end":
                 i += 1
             i += 1
             continue
@@ -182,7 +165,7 @@ def purge_managed_fish_content(lines):
         s = line.strip()
         if s.startswith("#") and ("ELMY0711" in s or "TEMA TERMUX" in s):
             continue
-        if s.startswith("alias tema=") or s.startswith("alias t=") or s.startswith("alias reload="):
+        if s.startswith("alias tema") or s.startswith("alias t") or s.startswith("alias reload"):
             continue
         cleaned.append(line)
     return cleaned
@@ -219,8 +202,9 @@ def apply_theme(num):
     download_font(theme["font"])
     apply_prompt_fish(theme["colors"])
     setup_keyboard()
+    run("termux-reload-settings")
     print("\nSelesai! Exit dan open lagi")
-    print("Klik tombol 'tema' untuk merubah tema.")
+    print("Klik tombol 'python3 ~/termux_tema/tema7.py' di keyboard untuk merubah tema.")
 
 def get_input(prompt):
     try:
@@ -236,7 +220,7 @@ def main():
     os.makedirs(FONT_CACHE, exist_ok=True)
 
     while True:
-        print("\n=== 💜  ELMY0711 TEMA TERMUX  💖 ===")
+        print("\n=== 💜 ELMY0711 TEMA TERMUX V7.1 💖 ===")
         for k, v in THEMES.items(): print(f"{k}. {v['name']:<20} - {v['font']}")
 
         pilih_input = get_input("\nPilih 1-7 atau q untuk keluar: ")
@@ -250,7 +234,7 @@ def main():
         pilih = int(pilih_input)
         if pilih in THEMES:
             preview_theme(pilih)
-            y = get_input("\nTerapkan tema ? [y/n]: ").lower()
+            y = get_input("\nTerapkan tema? [y/n]: ").lower()
             if y == 'y':
                 apply_theme(pilih)
                 break
