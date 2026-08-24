@@ -48,7 +48,7 @@ alias reload 'source ~/.config/fish/config.fish'
 '''
 
 def generate_fish_prompt(colors):
-    date_color = "#888888" 
+    date_color = "#666666" 
     if colors:
         c1 = colors.get('color1', '#ff0000')
         c2 = colors.get('color2', '#00ff00')
