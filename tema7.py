@@ -48,8 +48,7 @@ alias reload 'source ~/.config/fish/config.fish'
 '''
 
 def generate_fish_prompt(colors):
-    # DATE WARNA ABU2 DIMMED
-    date_color = "#888888" # Abu2
+    date_color = "#888888" 
     if colors:
         c1 = colors.get('color1', '#ff0000')
         c2 = colors.get('color2', '#00ff00')
@@ -109,7 +108,7 @@ def preview_theme(num):
     print(f" \033[38;2;{r1};{g1};{b1}m█ Merah\033[0m \033[38;2;{r2};{g2};{b2}m█ Hijau\033[0m \033[38;2;{r3};{g3};{b3}m█ Kuning\033[0m")
     print(f" \033[38;2;{r4};{g4};{b4}m█ Biru\033[0m \033[38;2;{r5};{g5};{b5}m█ Magenta\033[0m \033[38;2;{r6};{g6};{b6}m█ Cyan\033[0m")
     print(f" \033[48;2;{rb};{gb};{bb}m \033[0m Background \033[38;2;{rf};{gf};{bf}m█ Foreground\033[0m")
-    print(f"{'='*40}")
+    print(f"{'='*20}")
 
 def download_font(font_name):
     if font_name == "default":
@@ -137,8 +136,8 @@ def setup_keyboard():
     print("Setting up keyboard...")
     os.makedirs(f"{HOME}/.termux", exist_ok=True)
     script_path = f"{HOME}/termux_tema/tema7.py"
-    config = f'''extra-keys = [["bash ","python3 ","nano ","go run ","UP","END","PGUP","node "],["python3 {script_path}\\n","CTRL","BKSP","LEFT","DOWN","RIGHT","git clone ","curl -i "],["ls","cd ","clear","ENTER","ping ","git pull","rm -rf","exit"]]
-background_transparency = 85'''
+    config = f'''extra-keys = [["bash ","python3 ","nano ","go run ","UP","END","PGUP","node "],["python3 {script_path}\\n","CTRL","BKSP","LEFT","DOWN","RIGHT","git clone ","curl -i "],["ls","cd ","clear","ENTER","ping ","git pull","rm -rf ","exit"]]
+background_transparency = 55'''
     with open(TERMUX_PROPS, "w") as f:
         f.write(config)
 
@@ -204,7 +203,7 @@ def apply_theme(num):
     setup_keyboard()
     run("termux-reload-settings")
     print("\nSelesai! Exit dan open lagi")
-    print("Klik tombol 'python3 ~/termux_tema/tema7.py' di keyboard untuk merubah tema.")
+    print("Klik tombol 'python3 ~/termux_tema/tema7.py'")
 
 def get_input(prompt):
     try:
@@ -220,7 +219,7 @@ def main():
     os.makedirs(FONT_CACHE, exist_ok=True)
 
     while True:
-        print("\n=== 💜 ELMY0711 TEMA TERMUX V7.1 💖 ===")
+        print("\n=== 💜 ELMY0711 TEMA TERMUX  💖 ===")
         for k, v in THEMES.items(): print(f"{k}. {v['name']:<20} - {v['font']}")
 
         pilih_input = get_input("\nPilih 1-7 atau q untuk keluar: ")
