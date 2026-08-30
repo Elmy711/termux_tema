@@ -66,7 +66,7 @@ def colors(t):
 def prompt(t):
     p=t[5]; c1,c2,c3,c5,c6=p[1],p[2],p[3],p[5],p[6]
     s=f'''function fish_prompt
-    set_color {c6}
+    set_color brblack
     echo -n (date "+%d %b %H:%M")
     echo ""
     set_color {c5}
