@@ -14,13 +14,13 @@ CMD=B/"tema"
 NF="https://github.com/ryanoasis/nerd-fonts/releases/latest/download/"
 
 THEMES={
-"1":["Tokyo Night","Iosevka","regular","#1a1b26","#a9b1d6",
+"1":["Tokyo Night","Iosevka","regular","#002b36","#a9b1d6",
 ["#15161e","#f7768e","#73daca","#e0af68","#7aa2f7","#bb9af7","#7dcfff","#a9b1d6"]],
-"2":["Dracula","VictorMono","italic","#282a36","#f8f8f2",
+"2":["Dracula","VictorMono","italic","#002b36","#f8f8f2",
 ["#21222c","#ff5555","#50fa7b","#f1fa8c","#bd93f9","#ff79c6","#8be9fd","#f8f8f2"]],
-"3":["Nord","Hack","regular","#2e3440","#d8dee9",
+"3":["Nord","Hack","regular","#002b36","#d8dee9",
 ["#3b4252","#bf616a","#a3be8c","#ebcb8b","#81a1c1","#b48ead","#88c0d0","#e5e9f0"]],
-"4":["Gruvbox","CascadiaCode","regular","#282828","#ebdbb2",
+"4":["Gruvbox","CascadiaCode","regular","#002b36","#ebdbb2",
 ["#282828","#cc241d","#98971a","#d79921","#458588","#b16286","#689d6a","#a89984"]],
 "5":["Catppuccin","FiraCode","regular","#1e1e2e","#cdd6f4",
 ["#45475a","#f38ba8","#a6e3a1","#f9e2af","#89b4fa","#f5c2e7","#94e2d5","#bac2de"]],
