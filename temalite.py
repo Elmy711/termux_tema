@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import os,sys,shutil,subprocess,urllib.request
+import os, shutil, subprocess, urllib.request
 from pathlib import Path
 
 H=Path.home()
@@ -18,14 +18,7 @@ PR=F/"ELMY0711-prompt.fish"
 FONT=T/"font.ttf"
 COL=T/"colors.properties"
 PROP=T/"termux.properties"
-
-MAIN=H/"termux-theme.py"
 CMD=B/"tema"
-
-INSTALL_URL=(
-"https://raw.githubusercontent.com/"
-"minority1001/theme/main/install-theme.py"
-)
 
 BASE=(
 "https://raw.githubusercontent.com/"
@@ -83,7 +76,7 @@ BASE+"RobotoMono/Regular/"
 
 
 def setup():
-    for d in(T,F,B,C,FD,BK):
+    for d in (T,F,B,C,FD,BK):
         d.mkdir(
             parents=True,
             exist_ok=True
@@ -91,7 +84,7 @@ def setup():
 
 
 def backup():
-    for x in(CFG,COL,FONT,PROP):
+    for x in (CFG,COL,FONT,PROP):
         if x.exists():
             y=BK/x.name
             if not y.exists():
@@ -144,6 +137,7 @@ end
 function fish_right_prompt
 end
 '''
+
     PR.write_text(s)
 
 
@@ -173,13 +167,15 @@ def fish_source():
 
 def keyboard():
     s='''extra-keys=[["bash ","python3 ","nano ","go run ","UP","END","PGUP","node "],["tema","CTRL","BKSP","LEFT","DOWN","RIGHT","git clone ","curl -i "],["ls ","cd ","clear ","ENTER","ping ","git pull ","rm -rf ",{"macro":"CTRL d","display":"exit"}]]\n'''
+
     PROP.write_text(s)
 
 
 def command():
     s=f'''#!{P}/bin/bash
-exec {P}/bin/python3 "$HOME/termux-theme.py" "$@"
+exec {P}/bin/python3 "$HOME/temalite.py" "$@"
 '''
+
     CMD.write_text(s)
     CMD.chmod(0o755)
 
@@ -198,17 +194,21 @@ def download_font(name):
     if out.exists():
         size=out.stat().st_size
 
-        if size<=MAX:
+        if 0<size<=MAX:
+            shutil.copy2(out,FONT)
+
             print(
                 f"✓ Cache: {name} "
                 f"({size/1048576:.1f} MB)"
             )
-            shutil.copy2(out,FONT)
+
             return True
 
         out.unlink()
 
     print("Download",name+"...")
+
+    tmp=out.with_suffix(".download")
 
     try:
         req=urllib.request.Request(
@@ -229,42 +229,57 @@ def download_font(name):
             )
 
             if size and int(size)>MAX:
-                print(
-                    "! Font >20 MB"
-                )
+                print("! Font >20 MB")
                 return False
 
-            data=b""
+            total=0
 
-            while True:
-                chunk=r.read(65536)
+            with open(tmp,"wb") as f:
+                while True:
+                    chunk=r.read(65536)
 
-                if not chunk:
-                    break
+                    if not chunk:
+                        break
 
-                data+=chunk
+                    total+=len(chunk)
 
-                if len(data)>MAX:
-                    print(
-                        "! Download >20 MB"
-                    )
-                    return False
+                    if total>MAX:
+                        print("! Font >20 MB")
+                        tmp.unlink(
+                            missing_ok=True
+                        )
+                        return False
 
-        if not data.startswith(
-            b"\x00\x01\x00\x00"
-        ):
-            print(
-                "! File bukan TTF"
+                    f.write(chunk)
+
+        if total<10000:
+            print("! File font tidak valid")
+            tmp.unlink(
+                missing_ok=True
             )
             return False
 
-        out.write_bytes(data)
+        head=tmp.read_bytes()[:4]
+
+        if head!=b"\x00\x01\x00\x00":
+            print("! File bukan TTF")
+            tmp.unlink(
+                missing_ok=True
+            )
+            return False
+
+        tmp.replace(out)
 
     except Exception as e:
+        tmp.unlink(
+            missing_ok=True
+        )
+
         print(
             "! Download gagal:",
             e
         )
+
         return False
 
     mb=out.stat().st_size/1048576
@@ -321,9 +336,7 @@ def menu():
     while True:
         os.system("clear")
 
-        print(
-            "╭── ELMY0711 THEME ──╮"
-        )
+        print("╭── ELMY0711 THEME ──╮")
 
         for n,t in THEMES.items():
             print(
@@ -331,9 +344,7 @@ def menu():
             )
 
         print("│ Q. keluar          │")
-        print(
-            "╰────────────────────╯"
-        )
+        print("╰────────────────────╯")
 
         try:
             q=input(
@@ -356,65 +367,11 @@ def menu():
             return
 
 
-def save_main():
-    try:
-        req=urllib.request.Request(
-            INSTALL_URL,
-            headers={
-                "User-Agent":
-                "Termux-Theme"
-            }
-        )
-
-        with urllib.request.urlopen(
-            req,
-            timeout=30
-        ) as r:
-            data=r.read()
-
-        if not data:
-            raise RuntimeError(
-                "source kosong"
-            )
-
-        MAIN.write_bytes(data)
-
-        print(
-            "✓ ~/termux-theme.py dibuat"
-        )
-        return True
-
-    except Exception as e:
-        print(
-            "! Gagal membuat "
-            "termux-theme.py:",
-            e
-        )
-        return False
-
-
-def install():
-    setup()
-    backup()
-
-    if not save_main():
-        return
-
-    apply("1")
-
-    print()
-    print("✓ Installer selesai")
-    print()
-    print("Jalankan: exec fish")
-    print("Menu tema: tema")
-
-
 def main():
     setup()
 
-    if not MAIN.exists():
-        install()
-        return
+    if not CFG.exists():
+        CFG.touch()
 
     menu()
 
