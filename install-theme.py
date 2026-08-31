@@ -35,7 +35,7 @@ THEMES={
 "#7aa2f7","#bb9af7","#7dcfff"]],
 
 "2":["Dracula","VictorMono","italic",
-["#ff5555","#50fa7b","#f1fa8c",
+["#002b36","#50fa7b","#f1fa8c",
 "#bd93f9","#ff79c6","#8be9fd"]],
 
 "3":["Nord","Hack","regular",
@@ -59,15 +59,15 @@ THEMES={
 "#00aaff","#ff00ff","#00ffff"]],
 
 "8":["Solarized","RobotoMono","regular",
-["#dc322f","#859900","#b58900",
+["#002b36","#859900","#b58900",
 "#268bd2","#d33682","#2aa198"]],
 
 "9":["Everforest","UbuntuMono","regular",
-["#e67e80","#a7c080","#dbbc7f",
+["#002b36","#a7c080","#dbbc7f",
 "#7fbbb3","#d699b6","#83c092"]],
 
 "10":["Monokai","Mononoki","regular",
-["#f92672","#a6e22e","#f4bf75",
+["#002b36","#a6e22e","#f4bf75",
 "#66d9ef","#ae81ff","#a1efe4"]]
 }
 
