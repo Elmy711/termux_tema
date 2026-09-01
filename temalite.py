@@ -1,380 +1,83 @@
 #!/usr/bin/env python3
-import os, shutil, subprocess, urllib.request
+# TEMALITE - standalone Termux theme manager
+import os, json, shutil, urllib.request, zipfile
 from pathlib import Path
 
-H=Path.home()
-P=Path(os.getenv("PREFIX",
-"/data/data/com.termux/files/usr"))
-
-T=H/".termux"
-F=H/".config/fish"
-B=H/"bin"
-C=H/".termux-themes"
-FD=C/"fonts"
-BK=H/".termux-backup"
-
-CFG=F/"config.fish"
-PR=F/"ELMY0711-prompt.fish"
-FONT=T/"font.ttf"
-COL=T/"colors.properties"
-PROP=T/"termux.properties"
-CMD=B/"tema"
-
-BASE=(
-"https://raw.githubusercontent.com/"
-"ryanoasis/nerd-fonts/v3.4.0/"
-"patched-fonts/"
-)
-
-MAX=20*1024*1024
+HOME=Path.home(); TERMUX=HOME/".termux"; COLORS=TERMUX/"colors.properties"
+KEYS=TERMUX/"termux.properties"; FONT=TERMUX/"font.ttf"
+BACKUP=TERMUX/"temalite-backup"; STATE=HOME/".temalite.json"
 
 THEMES={
-"1":[
-"Tokyo Night","Terminess","regular","#1a1b26",
-["#15161e","#f7768e","#73daca","#e0af68",
-"#7aa2f7","#bb9af7","#7dcfff","#a9b1d6"]
-],
-"2":[
-"Dracula","VictorMono","italic","#282a36",
-["#21222c","#ff5555","#50fa7b","#f1fa8c",
-"#bd93f9","#ff79c6","#8be9fd","#f8f8f2"]
-],
-"3":[
-"Nord","Hack","regular","#2e3440",
-["#3b4252","#bf616a","#a3be8c","#ebcb8b",
-"#81a1c1","#b48ead","#88c0d0","#e5e9f0"]
-],
-"4":[
-"Solarized","RobotoMono","regular","#002b36",
-["#073642","#dc322f","#859900","#b58900",
-"#268bd2","#d33682","#2aa198","#eee8d5"]
-]
-}
+"Tokyo Night":["#16161e","#a9b1d6","#c0caf5","#283457","#c0caf5","#15161e","#f7768e","#41a6b5","#e0af68","#7aa2f7","#bb9af7","#7dcfff","#787c99","#414868","#f7768e","#73daca","#ff9e64","#7aa2f7","#bb9af7","#7dcfff","#c0caf5"],
+"Dracula":["#282a36","#f8f8f2","#f8f8f0","#44475a","#f8f8f2","#21222c","#ff5555","#50fa7b","#f1fa8c","#bd93f9","#ff79c6","#8be9fd","#f8f8f2","#6272a4","#ff6e6e","#69ff94","#ffffa5","#d6acff","#ff92df","#a4ffff","#ffffff"],
+"Nord":["#2e3440","#d8dee9","#d8dee9","#434c5e","#eceff4","#3b4252","#bf616a","#a3be8c","#ebcb8b","#81a1c1","#b48ead","#88c0d0","#e5e9f0","#4c566a","#bf616a","#a3be8c","#ebcb8b","#81a1c1","#b48ead","#8fbcbb","#eceff4"],
+"Gruvbox":["#282828","#ebdbb2","#ebdbb2","#504945","#fbf1c7","#282828","#cc241d","#98971a","#d79921","#458588","#b16286","#689d6a","#a89984","#928374","#fb4934","#b8bb26","#fabd2f","#83a598","#d3869b","#8ec07c","#ebdbb2"],
+"One Dark":["#282c34","#abb2bf","#528bff","#3e4451","#ffffff","#282c34","#e06c75","#98c379","#e5c07b","#61afef","#c678dd","#56b6c2","#abb2bf","#5c6370","#e06c75","#98c379","#e5c07b","#61afef","#c678dd","#56b6c2","#ffffff"],
+"Catppuccin":["#1e1e2e","#cdd6f4","#f5e0e6","#45475a","#cdd6f4","#181825","#f38ba8","#a6e3a1","#f9e2af","#89b4fa","#f5c2e7","#94e2d5","#bac2de","#585b70","#f38ba8","#a6e3a1","#f9e2af","#89b4fa","#f5c2e7","#94e2d5","#a6adc8"],
+"Monokai":["#272822","#f8f8f2","#f8f8f0","#49483e","#ffffff","#272822","#f92672","#a6e22e","#e6db74","#66d9ef","#ae81ff","#a1efe4","#f8f8f2","#75715e","#f92672","#a6e22e","#e6db74","#66d9ef","#ae81ff","#a1efe4","#f9f8f5"],
+"Solarized Dark":["#002b36","#839496","#93a1a1","#073642","#eee8d5","#073642","#dc322f","#859900","#b58900","#268bd2","#d33682","#2aa198","#eee8d5","#586e75","#cb4b16","#586e75","#657b83","#839496","#6c71c4","#93a1a1","#fdf6e3"],
+"Rose Pine":["#191724","#e0def4","#524f67","#26233a","#e0def4","#26233a","#eb6f92","#9ccfd8","#f6c177","#31748f","#c4a7e7","#ebbcba","#e0def4","#6e6a86","#eb6f92","#9ccfd8","#f6c177","#31748f","#c4a7e7","#ebbcba","#e0def4"],
+"Everforest":["#2d353b","#d3c6aa","#d3c6aa","#475258","#d3c6aa","#475258","#e67e80","#a7c080","#dbbc7f","#7fbbb3","#d699b6","#83c092","#d3c6aa","#859289","#e67e80","#a7c080","#dbbc7f","#7fbbb3","#d699b6","#83c092","#e4e1cd"]}
+
+THEME_FONTS=[("Tokyo Night","Iosevka"),("Dracula","VictorMono"),("Nord","JetBrainsMono"),("Gruvbox","Hack"),("One Dark","CascadiaCode"),("Catppuccin","FiraCode"),("Monokai","Inconsolata"),("Solarized Dark","IBM Plex Mono"),("Rose Pine","Noto Sans Mono"),("Everforest","UbuntuMono")]
 
 FONTS={
-"Terminess":(
-"TerminessNerdFont-Regular.ttf",
-BASE+"Terminus/Regular/"
-"TerminessNerdFont-Regular.ttf"
-),
-"VictorMono":(
-"VictorMonoNerdFontMono-Italic.ttf",
-BASE+"VictorMono/Italic/"
-"VictorMonoNerdFontMono-Italic.ttf"
-),
-"Hack":(
-"HackNerdFont-Regular.ttf",
-BASE+"Hack/Regular/"
-"HackNerdFont-Regular.ttf"
-),
-"RobotoMono":(
-"RobotoMonoNerdFont-Regular.ttf",
-BASE+"RobotoMono/Regular/"
-"RobotoMonoNerdFont-Regular.ttf"
-)
-}
+"Iosevka":("https://github.com/be5invis/Iosevka/releases/latest/download/PkgTTF-Iosevka-31.0.0.zip","Iosevka-Regular.ttf"),
+"VictorMono":("https://github.com/rubjo/victor-mono/releases/latest/download/VictorMonoAll.zip","VictorMono-Regular.ttf"),
+"JetBrainsMono":("https://github.com/JetBrains/JetBrainsMono/releases/latest/download/JetBrainsMono-2.304.zip","JetBrainsMono-Regular.ttf"),
+"Hack":("https://github.com/source-foundry/Hack/releases/latest/download/Hack-v3.003-ttf.zip","Hack-Regular.ttf"),
+"CascadiaCode":("https://github.com/microsoft/cascadia-code/releases/latest/download/CascadiaCode-2407.24.zip","CascadiaCode.ttf"),
+"FiraCode":("https://github.com/tonsky/FiraCode/releases/latest/download/Fira_Code_v6.2.zip","FiraCode-Regular.ttf"),
+"Inconsolata":("https://github.com/googlefonts/Inconsolata/releases/latest/download/fonts.zip","Inconsolata-Regular.ttf"),
+"IBM Plex Mono":("https://github.com/IBM/plex/releases/latest/download/TrueType.zip","IBMPlexMono-Regular.ttf"),
+"Noto Sans Mono":("https://github.com/notofonts/latin-greek-cyrillic/releases/latest/download/NotoSansMono.zip","NotoSansMono-Regular.ttf"),
+"UbuntuMono":("https://github.com/ubuntu/ubuntu-font-family/releases/latest/download/ubuntu-font-family-0.83.zip","UbuntuMono-R.ttf")}
 
-
-def setup():
-    for d in (T,F,B,C,FD,BK):
-        d.mkdir(
-            parents=True,
-            exist_ok=True
-        )
-
-
-def backup():
-    for x in (CFG,COL,FONT,PROP):
-        if x.exists():
-            y=BK/x.name
-            if not y.exists():
-                shutil.copy2(x,y)
-
-
-def colors(t):
-    s=f"background={t[3]}\n"
-    s+="foreground=#ffffff\n"
-    s+="cursor=#ffffff\n"
-
-    for i,c in enumerate(t[4]):
-        s+=f"color{i}={c}\n"
-
-    COL.write_text(s)
-
-
-def prompt(t):
-    c=t[4][1]
-
-    s=f'''function fish_prompt
-    set_color brblack
-    echo -n (date "+%d %b %H:%M")
-    echo ""
-
-    set_color white
-    echo -n "╭─"
-
-    set_color {c}
-    echo -n "💖"
-
-    set_color white
-    echo -n "ELMY0711"
-
-    set_color {c}
-    echo -n "💜"
-
-    set_color white
-    echo -n "─["
-
-    echo -n (prompt_pwd)
-
-    echo -n "]"
-    echo ""
-
-    echo -n "╰─> "
-    set_color normal
-end
-
-function fish_right_prompt
-end
-'''
-
-    PR.write_text(s)
-
-
-def fish_source():
-    CFG.touch()
-
-    src=(
-        "source ~/.config/fish/"
-        "ELMY0711-prompt.fish"
-    )
-
-    text=CFG.read_text()
-
-    if src in text:
-        return
-
-    if text and not text.endswith("\n"):
-        text+="\n"
-
-    text+=(
-        "\n# ELMY0711 THEME\n"
-        +src+"\n"
-    )
-
-    CFG.write_text(text)
-
-
-def keyboard():
-    s='''extra-keys=[["bash ","python3 ","nano ","go run ","UP","END","PGUP","node "],["tema","CTRL","BKSP","LEFT","DOWN","RIGHT","git clone ","curl -i "],["ls ","cd ","clear ","ENTER","ping ","git pull ","rm -rf ",{"macro":"CTRL d","display":"exit"}]]\n'''
-
-    PROP.write_text(s)
-
-
-def command():
-    s=f'''#!{P}/bin/bash
-exec {P}/bin/python3 "$HOME/temalite.py" "$@"
-'''
-
-    CMD.write_text(s)
-    CMD.chmod(0o755)
-
-
-def download_font(name):
-    filename,url=FONTS[name]
-
-    d=FD/name
-    d.mkdir(
-        parents=True,
-        exist_ok=True
-    )
-
-    out=d/filename
-
-    if out.exists():
-        size=out.stat().st_size
-
-        if 0<size<=MAX:
-            shutil.copy2(out,FONT)
-
-            print(
-                f"✓ Cache: {name} "
-                f"({size/1048576:.1f} MB)"
-            )
-
-            return True
-
-        out.unlink()
-
-    print("Download",name+"...")
-
-    tmp=out.with_suffix(".download")
-
+def ensure():
+    TERMUX.mkdir(parents=True,exist_ok=True); BACKUP.mkdir(parents=True,exist_ok=True)
+def backup(p):
+    if p.exists() and not (BACKUP/p.name).exists(): shutil.copy2(p,BACKUP/p.name)
+def write_theme(name):
+    keys="background foreground cursor selection-background selection-foreground black red green yellow blue magenta cyan white bright-black bright-red bright-green bright-yellow bright-blue bright-magenta bright-cyan bright-white".split()
+    backup(COLORS); COLORS.write_text("\n".join(f"{k}={v}" for k,v in zip(keys,THEMES[name]))+"\n")
+def write_keys():
+    backup(KEYS)
+    KEYS.write_text("# TEMALITE\nextra-keys = [[\"ESC\",\"TAB\",\"CTRL\",\"ALT\",\"UP\",\"END\",\"PGUP\"],[\"HOME\",\"LEFT\",\"DOWN\",\"RIGHT\",\"PGDN\",\"ENTER\",\"~\"],[\"CTRL\",\"C\",\"CTRL\",\"D\",\"CTRL\",\"L\",\"CTRL\",\"Z\",\"|\"]]\n")
+def write_prompt():
+    d=HOME/".config/fish/functions"; d.mkdir(parents=True,exist_ok=True); p=d/"fish_prompt.fish"; backup(p)
+    p.write_text('function fish_prompt\n    set_color cyan\n    echo (date "+%a %d %b %H:%M:%S")\n    set_color magenta\n    echo "╭─["(prompt_pwd)"]"\n    set_color cyan\n    echo -n "╰─❯ " \n    set_color normal\nend\n')
+def font(name):
+    cache=HOME/".cache/temalite"; cache.mkdir(parents=True,exist_ok=True); arc=cache/(name.replace(" ","_")+".zip"); ext=cache/(name.replace(" ","_")+"_x"); url,want=FONTS[name]
     try:
-        req=urllib.request.Request(
-            url,
-            headers={
-                "User-Agent":
-                "Termux-Theme"
-            }
-        )
-
-        with urllib.request.urlopen(
-            req,
-            timeout=60
-        ) as r:
-
-            size=r.headers.get(
-                "Content-Length"
-            )
-
-            if size and int(size)>MAX:
-                print("! Font >20 MB")
-                return False
-
-            total=0
-
-            with open(tmp,"wb") as f:
-                while True:
-                    chunk=r.read(65536)
-
-                    if not chunk:
-                        break
-
-                    total+=len(chunk)
-
-                    if total>MAX:
-                        print("! Font >20 MB")
-                        tmp.unlink(
-                            missing_ok=True
-                        )
-                        return False
-
-                    f.write(chunk)
-
-        if total<10000:
-            print("! File font tidak valid")
-            tmp.unlink(
-                missing_ok=True
-            )
-            return False
-
-        head=tmp.read_bytes()[:4]
-
-        if head!=b"\x00\x01\x00\x00":
-            print("! File bukan TTF")
-            tmp.unlink(
-                missing_ok=True
-            )
-            return False
-
-        tmp.replace(out)
-
-    except Exception as e:
-        tmp.unlink(
-            missing_ok=True
-        )
-
-        print(
-            "! Download gagal:",
-            e
-        )
-
-        return False
-
-    mb=out.stat().st_size/1048576
-
-    print(
-        f"✓ Font: {filename} "
-        f"({mb:.1f} MB)"
-    )
-
-    shutil.copy2(out,FONT)
-    return True
-
-
-def reload_termux():
-    x=P/"bin/termux-reload-settings"
-
-    if x.exists():
-        subprocess.run(
-            [str(x)],
-            check=False
-        )
-
-
-def apply(n):
-    t=THEMES[n]
-
-    print()
-    print("Tema :",t[0])
-    print("Font :",t[1])
-    print("Style:",t[2])
-
-    backup()
-    colors(t)
-    prompt(t)
-    fish_source()
-    keyboard()
-    command()
-
-    if download_font(t[1]):
-        print("✓ Font aktif")
-    else:
-        print("! Font gagal dipasang")
-
-    reload_termux()
-
-    print()
-    print("✓ Tema aktif")
-    print("✓ Prompt aktif")
-    print("✓ Keyboard aktif")
-    print("✓ config.fish aman")
-
-
-def menu():
-    while True:
-        os.system("clear")
-
-        print("╭── ELMY0711 THEME ──╮")
-
-        for n,t in THEMES.items():
-            print(
-                f"│ {n}. {t[0]:<16}│"
-            )
-
-        print("│ Q. keluar          │")
-        print("╰────────────────────╯")
-
-        try:
-            q=input(
-                "Pilih: "
-            ).strip().lower()
-
-        except (EOFError,KeyboardInterrupt):
-            print()
-            return
-
-        if q in THEMES:
-            apply(q)
-
-            try:
-                input("\nENTER...")
-            except (EOFError,KeyboardInterrupt):
-                return
-
-        elif q=="q":
-            return
-
-
+        print("  ↓",name); urllib.request.urlretrieve(url,arc)
+        if ext.exists(): shutil.rmtree(ext)
+        ext.mkdir(); zipfile.ZipFile(arc).extractall(ext); fs=list(ext.rglob("*.ttf"))
+        t=next((x for x in fs if x.name.lower()==want.lower()),None) or next((x for x in fs if "regular" in x.stem.lower() and "italic" not in x.stem.lower()),None) or (fs[0] if fs else None)
+        if not t: print("  ! TTF tidak ditemukan"); return False
+        if FONT.exists(): backup(FONT)
+        shutil.copy2(t,FONT); print("  ✓",t.name); return True
+    except Exception as e: print("  ! Font gagal:",e); return False
+def apply(theme,f):
+    ensure(); write_theme(theme); write_keys(); write_prompt(); ok=font(f); STATE.write_text(json.dumps({"theme":theme,"font":f}))
+    print("\n✓ Tema aktif :",theme); print("✓ Font        :",f if ok else "gagal"); print("✓ Keyboard aktif"); print("✓ Fish prompt aktif"); print("✓ config.fish aman"); print("\nTutup lalu buka kembali Termux.")
+def restore():
+    if not BACKUP.exists(): print("! Belum ada backup."); return
+    for n in ("colors.properties","termux.properties","font.ttf"):
+        s=BACKUP/n; d=TERMUX/n
+        if s.exists(): shutil.copy2(s,d); print("✓ restored",n)
+    s=BACKUP/"fish_prompt.fish"; d=HOME/".config/fish/functions/fish_prompt.fish"
+    if s.exists(): d.parent.mkdir(parents=True,exist_ok=True); shutil.copy2(s,d); print("✓ restored fish_prompt.fish")
 def main():
-    setup()
-
-    if not CFG.exists():
-        CFG.touch()
-
-    menu()
-
-
+    ensure()
+    while True:
+        print("\n╭─ TEMALITE\n╰─ Standalone Termux Theme Manager\n")
+        for i,(t,f) in enumerate(THEME_FONTS,1): print(f" {i:2}. {t:<16} {f}")
+        print("  0. Keluar\n  b. Restore backup\n")
+        c=input("Pilih [0-10]: ").strip().lower()
+        if c=="0": return
+        if c=="b": restore(); continue
+        if c.isdigit() and 1<=int(c)<=10: t,f=THEME_FONTS[int(c)-1]; print(f"\nMengaktifkan {t} + {f}..."); apply(t,f)
+        else: print("! Pilihan tidak valid.")
 if __name__=="__main__":
-    main()
+    try: main()
+    except KeyboardInterrupt: print("\nDibatalkan.")
