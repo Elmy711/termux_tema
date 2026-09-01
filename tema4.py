@@ -35,7 +35,7 @@ THEMES={
     "Tokyo Night",
     "Iosevka",
     "regular",
-    "#1a1b26",
+    "#0a0a0a",
     ["#15161e","#f7768e","#73daca",
      "#e0af68","#7aa2f7","#bb9af7",
      "#7dcfff","#a9b1d6"]
@@ -45,7 +45,7 @@ THEMES={
     "Dracula",
     "VictorMono",
     "italic",
-    "#282a36",
+    "#002b36",
     ["#21222c","#ff5555","#50fa7b",
      "#f1fa8c","#bd93f9","#ff79c6",
      "#8be9fd","#f8f8f2"]
@@ -55,7 +55,7 @@ THEMES={
     "Nord",
     "Hack",
     "regular",
-    "#2e3440",
+    "#000000",
     ["#3b4252","#bf616a","#a3be8c",
      "#ebcb8b","#81a1c1","#b48ead",
      "#88c0d0","#e5e9f0"]
